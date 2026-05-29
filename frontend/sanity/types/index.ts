@@ -1,0 +1,8 @@
+export type {ImageWithAlt, SanityImageAsset} from './objects/image'
+export type {PortableText, PortableTextBlock, PortableTextSpan} from './objects/portableText'
+export type {SocialLinks} from './objects/socialLinks'
+export type {CardItem, CardsSection} from './sections/cards'
+export type {CarouselSection} from './sections/carousel'
+export type {HeroSection} from './sections/hero'
+export type {HomePage} from './sections/homePage'
+export type {StatItem, StatsSection} from './sections/stats'
