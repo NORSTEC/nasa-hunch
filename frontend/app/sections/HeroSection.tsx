@@ -3,6 +3,7 @@ import { FaInstagram } from "react-icons/fa";
 import { RiArrowRightLongLine } from "react-icons/ri";
 import { SlSocialLinkedin, SlSocialFacebook } from "react-icons/sl";
 import type { HeroSection as HeroSectionData } from "@/sanity/types";
+import { portableTextToPlainText } from "@/sanity/utils/portableText";
 
 const SOCIAL_LINKS = [
   {
@@ -29,20 +30,13 @@ type HeroSectionProps = {
   data: HeroSectionData | null;
 };
 
-function toPlainText(blocks: HeroSectionData["description"] = []) {
-  return blocks
-    .map((block) => block.children?.map((child) => child.text).join("") ?? "")
-    .filter(Boolean)
-    .join("\n\n");
-}
-
 export function HeroSection({ data }: HeroSectionProps) {
   if (!data) {
     return null;
   }
 
   const heroImage = data.images?.[0];
-  const description = toPlainText(data.description);
+  const description = portableTextToPlainText(data.description);
 
   return (
     <section className="">
@@ -58,18 +52,18 @@ export function HeroSection({ data }: HeroSectionProps) {
             className="h-auto w-full object-cover lg:h-[min(49vw,33rem)]"
           />
         ) : (
-          <div className="min-h-80 w-full border border-dashed border-foreground/50" />
+          <div className="min-h-80 w-full" />
         )}
 
         <div className="flex flex-col">
-          <div className="border-2 border-dashed border-foreground  text-center">
-            <p className="text-lg uppercase leading-tight">NASA HUNCH</p>
-            <p className="mt-1 flex items-center justify-center gap-2 text-lg uppercase leading-tight">
+          <div className="spaced-dashed-border text-center">
+            <p className="uppercase leading-tight">NASA HUNCH</p>
+            <p className="mt-1 flex items-center justify-center gap-2 uppercase leading-tight">
               HQ <RiArrowRightLongLine aria-hidden="true" /> OSLO, NORGE
             </p>
             <a
               href={`mailto:${data.contactBlock.email}`}
-              className="mt-1 block text-lg transition hover:text-accent-pink"
+              className="mt-1 block transition hover:text-accent-pink"
             >
               {data.contactBlock.email}
             </a>
@@ -99,10 +93,8 @@ export function HeroSection({ data }: HeroSectionProps) {
           </div>
 
           {description ? (
-            <div className="border-2 border-dashed border-foreground">
-              <p className="mx-auto">
-                {description}
-              </p>
+            <div className="spaced-dashed-border">
+              <p>{description}</p>
             </div>
           ) : null}
         </div>
