@@ -40,6 +40,9 @@ export function StatsSection({ data }: StatsSectionProps) {
     return null;
   }
 
+  const stats = data.stats.slice(0, 4);
+  const mobileMaxValue = Math.max(...stats.map((stat) => stat.number), 1);
+
   return (
     <section
       ref={sectionRef}
@@ -58,17 +61,26 @@ export function StatsSection({ data }: StatsSectionProps) {
       </div>
 
       <div className={styles.stats}>
-        {data.stats.slice(0, 4).map((stat, index) => {
+        {stats.map((stat, index) => {
           const width = Math.min(
             100,
             Math.max(8, (stat.number / MAX_STAT_VALUE) * 100),
+          );
+          const mobileWidth = Math.min(
+            100,
+            Math.max(8, (stat.number / mobileMaxValue) * 100),
           );
 
           return (
             <div
               key={stat._key}
               className={`${styles.stat} ${styles[`variant${index + 1}`]}`}
-              style={{ "--stat-width": `${width}%` } as CSSProperties}
+              style={
+                {
+                  "--stat-width": `${width}%`,
+                  "--stat-mobile-width": `${mobileWidth}%`,
+                } as CSSProperties
+              }
             >
               <span className={styles.statText}>
                 {stat.number} {stat.text}
