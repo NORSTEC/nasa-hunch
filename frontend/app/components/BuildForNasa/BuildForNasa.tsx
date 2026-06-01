@@ -42,14 +42,28 @@ export function BuildForNasa() {
           aria-pressed={isLightMode}
           aria-label="Bytt fargetema"
         >
-          <Image
-            key={logoSpinKey}
-            src={isLightMode ? "/norstec-pink.png" : "/norstec-blue.png"}
-            alt="Norstec"
-            width={80}
-            height={80}
-            className={styles.logo}
-          />
+          <span key={logoSpinKey} className={styles.logoStack}>
+            <Image
+              src="/norstec-blue.png"
+              alt=""
+              width={80}
+              height={80}
+              priority
+              className={`${styles.logo} ${
+                isLightMode ? "" : styles.logoVisible
+              }`}
+            />
+            <Image
+              src="/norstec-pink.png"
+              alt=""
+              width={80}
+              height={80}
+              priority
+              className={`${styles.logo} ${
+                isLightMode ? styles.logoVisible : ""
+              }`}
+            />
+          </span>
         </button>
 
         <p className={styles.text}>

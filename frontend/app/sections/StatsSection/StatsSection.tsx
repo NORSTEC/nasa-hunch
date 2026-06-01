@@ -71,14 +71,28 @@ export function StatsSection({ data }: StatsSectionProps) {
         aria-pressed={isLightMode}
         aria-label="Bytt fargetema"
       >
-        <Image
-          key={logoSpinKey}
-          src={isLightMode ? "/norstec-blue.png" : "/norstec-pink.png"}
-          alt=""
-          width={180}
-          height={180}
-          className={styles.logo}
-        />
+        <span key={logoSpinKey} className={styles.logoStack}>
+          <Image
+            src="/norstec-pink.png"
+            alt=""
+            width={180}
+            height={180}
+            priority
+            className={`${styles.logo} ${
+              isLightMode ? "" : styles.logoVisible
+            }`}
+          />
+          <Image
+            src="/norstec-blue.png"
+            alt=""
+            width={180}
+            height={180}
+            priority
+            className={`${styles.logo} ${
+              isLightMode ? styles.logoVisible : ""
+            }`}
+          />
+        </span>
       </button>
 
       <div className={styles.stats}>

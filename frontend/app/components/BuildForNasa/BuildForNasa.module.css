@@ -26,11 +26,26 @@
   outline-offset: 0.45rem;
 }
 
-.logo {
+.logoStack {
+  position: relative;
+  display: block;
   width: clamp(2.1rem, 11vw, 3.5rem);
   height: clamp(2.1rem, 11vw, 3.5rem);
-  object-fit: contain;
   animation: logo-spin 700ms cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+.logo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.logoVisible {
+  opacity: 1;
 }
 
 .text {
