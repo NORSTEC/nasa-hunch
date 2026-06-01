@@ -82,7 +82,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                     key={key}
                     href={href}
                     aria-label={label}
-                    className={`${className} text-4xl! leading-none transition hover:scale-90 hover:text-foreground`}
+                    className={`${className} text-4xl! leading-none transition hover:scale-110 hover:text-foreground`}
                     rel="noreferrer"
                     target="_blank"
                   >

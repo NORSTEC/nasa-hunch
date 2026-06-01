@@ -13,8 +13,9 @@
   position: relative;
   display: grid;
   place-items: center;
-  overflow: hidden;
-  padding-top: 2.5rem;
+  min-height: clamp(18rem, 34vw, 30rem);
+  overflow: visible;
+  padding-block: clamp(3rem, 6vw, 5.5rem);
 }
 
 .logo {
@@ -26,7 +27,7 @@
 .word {
   position: absolute;
   width: clamp(7rem, 17vw, 13rem);
-  height: clamp(13rem, 25vw, 20rem);
+  height: clamp(15rem, 28vw, 23rem);
   color: var(--word-color);
   font-family: var(--font-heading);
   font-size: clamp(3.4rem, 7vw, 6.8rem);
@@ -80,7 +81,7 @@
 
 .leftWord .letter:nth-child(4) {
   left: 34%;
-  top: 69%;
+  top: 64%;
   animation-name: nasa-letter-four;
   animation-delay: -3.6s;
 }
@@ -107,15 +108,15 @@
 }
 
 .rightWord .letter:nth-child(4) {
-  right: 4%;
-  top: 58%;
+  right: 2%;
+  top: 53%;
   animation-name: hunch-letter-four;
   animation-delay: -4.1s;
 }
 
 .rightWord .letter:nth-child(5) {
-  right: 30%;
-  top: 74%;
+  right: 38%;
+  top: 70%;
   animation-name: hunch-letter-five;
   animation-delay: -11.2s;
 }
@@ -257,7 +258,8 @@
 
 @media (max-width: 767px) {
   .stage {
-    min-height: 18rem;
+    min-height: 19rem;
+    padding-block: 2.5rem;
   }
 
   .logo {

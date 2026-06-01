@@ -1,0 +1,128 @@
+.footer {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) auto minmax(8rem, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.mascots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.4rem, 1.6vw, 1.2rem);
+  min-width: 0;
+}
+
+.mascot {
+  width: clamp(4.25rem, 8vw, 8rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0.18rem 0.22rem 0 var(--background));
+  transform-origin: 50% 55%;
+  animation: footer-float 5.8s ease-in-out infinite;
+}
+
+.mascotOne {
+  animation-delay: -0.8s;
+  transform: rotate(-8deg);
+}
+
+.mascotTwo {
+  animation-delay: -2.4s;
+  transform: rotate(7deg);
+}
+
+.mascotThree {
+  width: clamp(5.25rem, 10vw, 10rem);
+  animation-delay: -1.6s;
+  transform: rotate(-12deg);
+}
+
+.mascotFour {
+  animation-delay: -3.1s;
+  transform: rotate(6deg);
+}
+
+.center {
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
+  text-align: center;
+}
+
+.logo {
+  width: clamp(13rem, 24vw, 22rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.logoFallback {
+  font-family: var(--font-heading);
+  font-size: var(--type-heading-md);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rights,
+.credits {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  line-height: 1.2;
+}
+
+.credits a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color 180ms ease;
+}
+
+.credits a:hover {
+  color: var(--accent-pink);
+}
+
+@keyframes footer-float {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 0 -0.75rem;
+    rotate: 4deg;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-block: 3rem;
+  }
+
+  .mascots {
+    order: 2;
+  }
+
+  .center {
+    order: 1;
+  }
+
+  .mascot {
+    width: 4.75rem;
+  }
+
+  .mascotThree {
+    width: 5.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot {
+    animation: none;
+  }
+}
