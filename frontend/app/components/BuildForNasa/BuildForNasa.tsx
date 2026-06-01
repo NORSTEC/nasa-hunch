@@ -6,17 +6,17 @@ const ARROWS = [0, 1, 2] as const;
 
 export function BuildForNasa() {
   return (
-    <div className="section py-20 flex items-center justify-center">
-      <div className="flex flex-wrap items-center justify-center gap-6 text-center font-heading text-page-heading-md uppercase sm:justify-start sm:gap-8">
+    <div className="section py-20">
+      <div className={styles.root}>
         <Image
           src="/logo-blue.png"
           alt="Norstec"
           width={80}
           height={80}
-          className="h-14 w-14 object-contain"
+          className={styles.logo}
         />
 
-        <p className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+        <p className={styles.text}>
           <span>Vi bygger for</span>
           <span className={styles.arrows} aria-hidden="true">
             {ARROWS.map((arrow) => (

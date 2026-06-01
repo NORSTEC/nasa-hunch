@@ -29,7 +29,7 @@ export function Navbar({ data }: NavbarProps) {
 
         {email ? (
           <a
-            href={`mailto:${email}`}
+            href="#contact"
             className="dotted-button dotted-button-pink uppercase"
           >
             Kontakt

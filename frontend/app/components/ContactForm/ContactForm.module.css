@@ -1,0 +1,225 @@
+.school {
+  --contact-color: var(--accent-pink);
+}
+
+.partner {
+  --contact-color: var(--accent-blue);
+}
+
+.toggleGroup {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.toggle {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0.45rem 1.4rem;
+  border: 2px dashed var(--toggle-color);
+  border-radius: 9999px;
+  color: var(--toggle-color);
+  background: transparent;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.schoolToggle {
+  --toggle-color: var(--accent-pink);
+}
+
+.partnerToggle {
+  --toggle-color: var(--accent-blue);
+}
+
+.activeToggle {
+  color: var(--foreground);
+  background: var(--toggle-color);
+  border-color: var(--toggle-color);
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  --dash-color: var(--contact-color);
+  --dash-width: 2px;
+  --dash-length: 10px;
+  --dash-gap: 10px;
+  background:
+    repeating-linear-gradient(
+        to right,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left top / 100% var(--dash-width) no-repeat,
+    repeating-linear-gradient(
+        to right,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left bottom / 100% var(--dash-width) no-repeat,
+    repeating-linear-gradient(
+        to bottom,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left top / var(--dash-width) 100% no-repeat,
+    repeating-linear-gradient(
+        to bottom,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      right top / var(--dash-width) 100% no-repeat;
+}
+
+.fields {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 46rem;
+}
+
+.field {
+  display: block;
+}
+
+.field :is(input, textarea) {
+  width: 100%;
+  border: 2px dashed var(--background);
+  border-radius: 1rem;
+  color: var(--foreground);
+  background: var(--contact-color);
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  text-transform: uppercase;
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.field input {
+  min-height: 2.55rem;
+  padding: 0.35rem 0.8rem;
+}
+
+.field textarea {
+  min-height: 13rem;
+  padding: 0.8rem;
+  resize: vertical;
+}
+
+.field :is(input, textarea)::placeholder {
+  color: var(--foreground);
+  opacity: 1;
+}
+
+.field :is(input, textarea):focus {
+  border-color: var(--foreground);
+}
+
+.submitButton {
+  width: fit-content;
+  min-width: 9.5rem;
+  padding: 0.45rem 1.4rem;
+  border: 2px dashed var(--contact-color);
+  border-radius: 9999px;
+  color: var(--contact-color);
+  background: transparent;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.submitButton:hover {
+  color: var(--foreground);
+  background: var(--contact-color);
+  border-color: var(--contact-color);
+}
+
+.mascotWrap {
+  position: relative;
+  z-index: 0;
+  display: none;
+  min-height: 20rem;
+  transform: translate3d(0, var(--mascot-offset, 0), 0);
+  transition: transform 70ms linear;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.mascot {
+  width: min(24vw, 20rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0.25rem 0.3rem 0 var(--background));
+  animation: mascot-float 5.6s ease-in-out infinite;
+  transform-origin: 52% 48%;
+  will-change: transform;
+}
+
+@keyframes mascot-float {
+  0% {
+    transform: translate3d(-0.6rem, 0.2rem, 0) rotate(-5deg);
+  }
+
+  50% {
+    transform: translate3d(0.7rem, -0.55rem, 0) rotate(3deg);
+  }
+
+  100% {
+    transform: translate3d(-0.6rem, 0.2rem, 0) rotate(-5deg);
+  }
+}
+
+@media (min-width: 768px) {
+  .toggleGroup {
+    margin-left: 0;
+  }
+
+  .toggle {
+    flex: 0 0 auto;
+    min-width: 9.5rem;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
+    align-items: center;
+  }
+
+  .mascotWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascotWrap {
+    transform: none;
+  }
+
+  .mascot {
+    animation: none;
+  }
+}

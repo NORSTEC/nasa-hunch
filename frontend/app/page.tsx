@@ -1,4 +1,5 @@
 import { BuildForNasa } from "@/app/components/BuildForNasa/BuildForNasa";
+import { ContactForm } from "@/app/components/ContactForm/ContactForm";
 import { Navbar } from "@/app/components/Navbar";
 import { HeroSection } from "@/app/sections/HeroSection";
 import { homePageQuery } from "@/sanity/queries";
@@ -38,6 +39,7 @@ export default async function Home() {
       <Navbar data={homePage.hero} />
       <HeroSection data={homePage.hero} />
       <BuildForNasa />
+      <ContactForm />
     </main>
   );
 }
