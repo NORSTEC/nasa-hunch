@@ -36,14 +36,14 @@
 
 .leftWord {
   --word-color: var(--accent-pink);
-  left: clamp(0.4rem, 5vw, 5.5rem);
+  left: clamp(1rem, 6vw, 6.5rem);
   top: 50%;
   transform: translateY(-46%) ;
 }
 
 .rightWord {
   --word-color: var(--accent-blue);
-  right: clamp(0.4rem, 5vw, 5.5rem);
+  right: clamp(1rem, 6vw, 6.5rem);
   top: 50%;
   transform: translateY(-48%) ;
 }
@@ -123,135 +123,135 @@
 @keyframes nasa-letter-one {
   0%,
   100% {
-    transform: translate3d(0.2em, 0, 0) rotate(-10deg);
+    transform: translate3d(0.08em, 0, 0) rotate(-18deg);
   }
 
   45% {
-    transform: translate3d(0.95em, -0.18em, 0) rotate(8deg);
+    transform: translate3d(0.35em, -0.16em, 0) rotate(24deg);
   }
 
   72% {
-    transform: translate3d(-0.15em, 0.22em, 0) rotate(-3deg);
+    transform: translate3d(-0.08em, 0.18em, 0) rotate(-8deg);
   }
 }
 
 @keyframes nasa-letter-two {
   0%,
   100% {
-    transform: translate3d(-0.1em, 0.08em, 0) rotate(7deg);
+    transform: translate3d(-0.06em, 0.08em, 0) rotate(14deg);
   }
 
   38% {
-    transform: translate3d(-0.9em, -0.15em, 0) rotate(-8deg);
+    transform: translate3d(-0.3em, -0.12em, 0) rotate(-28deg);
   }
 
   76% {
-    transform: translate3d(0.45em, 0.18em, 0) rotate(3deg);
+    transform: translate3d(0.18em, 0.16em, 0) rotate(8deg);
   }
 }
 
 @keyframes nasa-letter-three {
   0%,
   100% {
-    transform: translate3d(0.05em, -0.08em, 0) rotate(-3deg);
+    transform: translate3d(0.04em, -0.08em, 0) rotate(-12deg);
   }
 
   42% {
-    transform: translate3d(1.1em, 0.1em, 0) rotate(9deg);
+    transform: translate3d(0.35em, 0.08em, 0) rotate(26deg);
   }
 
   70% {
-    transform: translate3d(0.25em, -0.22em, 0) rotate(-7deg);
+    transform: translate3d(0.12em, -0.18em, 0) rotate(-18deg);
   }
 }
 
 @keyframes nasa-letter-four {
   0%,
   100% {
-    transform: translate3d(-0.1em, 0, 0) rotate(12deg);
+    transform: translate3d(-0.06em, 0, 0) rotate(20deg);
   }
 
   48% {
-    transform: translate3d(-1em, 0.16em, 0) rotate(-6deg);
+    transform: translate3d(-0.32em, 0.14em, 0) rotate(-24deg);
   }
 
   78% {
-    transform: translate3d(0.3em, -0.2em, 0) rotate(5deg);
+    transform: translate3d(0.12em, -0.17em, 0) rotate(12deg);
   }
 }
 
 @keyframes hunch-letter-one {
   0%,
   100% {
-    transform: translate3d(0, 0.05em, 0) rotate(10deg);
+    transform: translate3d(0, 0.05em, 0) rotate(22deg);
   }
 
   40% {
-    transform: translate3d(-0.8em, -0.18em, 0) rotate(-7deg);
+    transform: translate3d(-0.28em, -0.16em, 0) rotate(-24deg);
   }
 
   75% {
-    transform: translate3d(0.35em, 0.2em, 0) rotate(4deg);
+    transform: translate3d(0.16em, 0.16em, 0) rotate(10deg);
   }
 }
 
 @keyframes hunch-letter-two {
   0%,
   100% {
-    transform: translate3d(-0.1em, 0, 0) rotate(-9deg);
+    transform: translate3d(-0.06em, 0, 0) rotate(-18deg);
   }
 
   44% {
-    transform: translate3d(0.75em, 0.14em, 0) rotate(8deg);
+    transform: translate3d(0.26em, 0.12em, 0) rotate(26deg);
   }
 
   73% {
-    transform: translate3d(-0.45em, -0.2em, 0) rotate(-3deg);
+    transform: translate3d(-0.18em, -0.16em, 0) rotate(-8deg);
   }
 }
 
 @keyframes hunch-letter-three {
   0%,
   100% {
-    transform: translate3d(0.2em, -0.05em, 0) rotate(5deg);
+    transform: translate3d(0.08em, -0.05em, 0) rotate(12deg);
   }
 
   46% {
-    transform: translate3d(-0.9em, 0.18em, 0) rotate(-10deg);
+    transform: translate3d(-0.3em, 0.15em, 0) rotate(-30deg);
   }
 
   80% {
-    transform: translate3d(0.4em, -0.16em, 0) rotate(6deg);
+    transform: translate3d(0.15em, -0.14em, 0) rotate(18deg);
   }
 }
 
 @keyframes hunch-letter-four {
   0%,
   100% {
-    transform: translate3d(0.05em, 0.08em, 0) rotate(-6deg);
+    transform: translate3d(0.04em, 0.08em, 0) rotate(-16deg);
   }
 
   36% {
-    transform: translate3d(0.95em, -0.15em, 0) rotate(7deg);
+    transform: translate3d(0.3em, -0.12em, 0) rotate(24deg);
   }
 
   69% {
-    transform: translate3d(-0.25em, 0.2em, 0) rotate(-2deg);
+    transform: translate3d(-0.12em, 0.16em, 0) rotate(-7deg);
   }
 }
 
 @keyframes hunch-letter-five {
   0%,
   100% {
-    transform: translate3d(-0.15em, 0, 0) rotate(12deg);
+    transform: translate3d(-0.06em, 0, 0) rotate(20deg);
   }
 
   50% {
-    transform: translate3d(0.85em, 0.2em, 0) rotate(-6deg);
+    transform: translate3d(0.28em, 0.16em, 0) rotate(-26deg);
   }
 
   79% {
-    transform: translate3d(-0.45em, -0.18em, 0) rotate(3deg);
+    transform: translate3d(-0.15em, -0.15em, 0) rotate(9deg);
   }
 }
 
@@ -271,11 +271,11 @@
   }
 
   .leftWord {
-    left: 0.2rem;
+    left: 0.8rem;
   }
 
   .rightWord {
-    right: 0.2rem;
+    right: 0.8rem;
   }
 }
 
