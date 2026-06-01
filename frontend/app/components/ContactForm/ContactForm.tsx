@@ -72,7 +72,7 @@ export function ContactForm() {
   return (
     <div
       id="contact"
-      className={`section py-20 ${activeMode.className}`}
+      className={`section ${activeMode.className}`}
       ref={rootRef}
     >
       <div className={styles.toggleGroup} aria-label="Velg kontakttype">

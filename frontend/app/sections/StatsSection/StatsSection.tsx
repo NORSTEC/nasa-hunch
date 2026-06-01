@@ -43,7 +43,7 @@ export function StatsSection({ data }: StatsSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className={`section py-20 ${styles.section} ${
+      className={`section ${styles.section} ${
         isVisible ? styles.isVisible : ""
       }`}
     >

@@ -6,7 +6,7 @@ const ARROWS = [0, 1, 2] as const;
 
 export function BuildForNasa() {
   return (
-    <div className="section py-20">
+    <div className="section">
       <div className={styles.root}>
         <Image
           src="/logo-blue.png"

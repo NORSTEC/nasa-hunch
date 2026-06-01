@@ -10,7 +10,7 @@ export function Navbar({ data }: NavbarProps) {
   const email = data?.contactBlock.email;
 
   return (
-    <header className="section pt-10">
+    <header className="px-5 sm:px-10 py-10">
       <nav className="flex items-center justify-between gap-6">
         <div aria-label="NASA HUNCH home" className="block">
           {logo?.asset?.url ? (
