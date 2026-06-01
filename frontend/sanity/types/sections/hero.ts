@@ -4,6 +4,7 @@ import type {SocialLinks} from '../objects/socialLinks'
 
 export type HeroSection = {
   logo: ImageWithAlt
+  darkLogo?: ImageWithAlt | null
   images: ImageWithAlt[]
   contactBlock: {
     email: string

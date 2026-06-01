@@ -7,9 +7,14 @@ export const heroSection = defineType({
   fields: [
     defineField({
       name: 'logo',
-      title: 'Logo',
+      title: 'Logo light mode',
       type: 'imageWithAlt',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'darkLogo',
+      title: 'Logo dark mode',
+      type: 'imageWithAlt',
     }),
     defineField({
       name: 'images',

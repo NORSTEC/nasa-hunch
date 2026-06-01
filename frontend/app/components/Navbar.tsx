@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import type { HeroSection as HeroSectionData } from "@/sanity/types";
 
 type NavbarProps = {
@@ -6,8 +9,22 @@ type NavbarProps = {
 };
 
 export function Navbar({ data }: NavbarProps) {
-  const logo = data?.logo;
+  const [isLightMode, setIsLightMode] = useState(false);
+  const lightLogo = data?.logo;
+  const darkLogo = data?.darkLogo ?? data?.logo;
+  const logo = isLightMode ? lightLogo : darkLogo;
   const email = data?.contactBlock.email;
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const updateTheme = () => setIsLightMode(root.classList.contains("light"));
+    const observer = new MutationObserver(updateTheme);
+
+    updateTheme();
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="px-5 sm:px-10 py-10">

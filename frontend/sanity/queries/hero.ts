@@ -4,6 +4,9 @@ export const heroSectionFields = `
   logo {
     ${imageWithAltFields}
   },
+  darkLogo {
+    ${imageWithAltFields}
+  },
   images[] {
     ${imageWithAltFields}
   },

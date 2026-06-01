@@ -13,11 +13,24 @@
   white-space: nowrap;
 }
 
+.logoButton {
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.logoButton:focus-visible {
+  outline: 2px dashed var(--accent-blue);
+  outline-offset: 0.45rem;
+}
+
 .logo {
   width: clamp(2.1rem, 11vw, 3.5rem);
   height: clamp(2.1rem, 11vw, 3.5rem);
-  flex: 0 0 auto;
   object-fit: contain;
+  animation: logo-spin 700ms cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 .text {
@@ -99,5 +112,15 @@
   57.14% {
     opacity: 1;
     transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
