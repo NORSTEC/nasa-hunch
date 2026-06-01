@@ -86,7 +86,7 @@ select {
   --dash-color: var(--foreground);
   --dash-width: 2px;
   --dash-length: 10px;
-  --dash-gap: 15px;
+  --dash-gap: 10px;
 }
 
 .spaced-dashed-border::before {
@@ -123,6 +123,35 @@ select {
           calc(var(--dash-length) + var(--dash-gap))
       )
       right top / var(--dash-width) 100% no-repeat;
+}
+
+.dotted-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9.5rem;
+  padding: 0.6rem 1.4rem;
+  border: 2px dashed var(--dotted-button-color, var(--accent-pink));
+  border-radius: 9999px;
+  color: var(--dotted-button-color, var(--accent-pink)) !important;
+  background: transparent;
+  font-family: var(--font-heading);
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.dotted-button-pink {
+  --dotted-button-color: var(--accent-pink);
+}
+
+.dotted-button:hover {
+  color: var(--foreground) !important;
+  border-color: var(--dotted-button-color, var(--accent-pink));
+  background-color: var(--dotted-button-color, var(--accent-pink));
 }
 
 .section {

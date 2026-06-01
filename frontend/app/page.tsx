@@ -1,3 +1,5 @@
+import { BuildForNasa } from "@/app/components/BuildForNasa/BuildForNasa";
+import { Navbar } from "@/app/components/Navbar";
 import { HeroSection } from "@/app/sections/HeroSection";
 import { homePageQuery } from "@/sanity/queries";
 import type { HomePage } from "@/sanity/types";
@@ -33,7 +35,9 @@ export default async function Home() {
 
   return (
     <main className="bg-background text-foreground">
+      <Navbar data={homePage.hero} />
       <HeroSection data={homePage.hero} />
+      <BuildForNasa />
     </main>
   );
 }

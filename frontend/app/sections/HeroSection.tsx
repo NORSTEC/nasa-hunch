@@ -39,7 +39,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   const description = portableTextToPlainText(data.description);
 
   return (
-    <section className="section">
+    <section className="section py-20">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
         <div className="relative aspect-square w-full lg:max-w-[35rem] flex-none overflow-hidden bg-background">
           {heroImage?.asset?.url ? (
