@@ -39,34 +39,35 @@ export function HeroSection({ data }: HeroSectionProps) {
   const description = portableTextToPlainText(data.description);
 
   return (
-    <section className="">
-      <div className="">
-        {heroImage?.asset?.url ? (
-          <Image
-            src={heroImage.asset.url}
-            alt={heroImage.alt}
-            width={heroImage.asset.metadata?.dimensions?.width ?? 1200}
-            height={heroImage.asset.metadata?.dimensions?.height ?? 900}
-            priority
-            sizes="(min-width: 1024px) 55vw, 100vw"
-            className="h-auto w-full object-cover lg:h-[min(49vw,33rem)]"
-          />
-        ) : (
-          <div className="min-h-80 w-full" />
-        )}
+    <section className="section">
+      <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
+        <div className="relative aspect-square w-full lg:max-w-[35rem] flex-none overflow-hidden bg-background">
+          {heroImage?.asset?.url ? (
+            <Image
+              src={heroImage.asset.url}
+              alt={heroImage.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 33rem, 100vw"
+              className="object-cover"
+            />
+          ) : null}
+        </div>
 
-        <div className="flex flex-col">
-          <div className="spaced-dashed-border text-center">
+        <div className="flex flex-col gap-10 lg:flex-1">
+          <div className="spaced-dashed-border text-center p-5">
             <p className="uppercase leading-tight">NASA HUNCH</p>
             <p className="mt-1 flex items-center justify-center gap-2 uppercase leading-tight">
               HQ <RiArrowRightLongLine aria-hidden="true" /> OSLO, NORGE
             </p>
-            <a
-              href={`mailto:${data.contactBlock.email}`}
-              className="mt-1 block transition hover:text-accent-pink"
-            >
-              {data.contactBlock.email}
-            </a>
+            <div className="flex items-center justify-center">
+              <a
+                href={`mailto:${data.contactBlock.email}`}
+                className="mt-1 block transition hover:text-accent-pink w-fit"
+              >
+                {data.contactBlock.email}
+              </a>
+            </div>
 
             <div className="mt-10 flex items-center justify-center gap-10">
               {SOCIAL_LINKS.map(({ key, label, className, Icon }) => {
@@ -81,7 +82,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                     key={key}
                     href={href}
                     aria-label={label}
-                    className={`${className} text-4xl leading-none transition hover:scale-90 hover:text-foreground`}
+                    className={`${className} text-4xl! leading-none transition hover:scale-90 hover:text-foreground`}
                     rel="noreferrer"
                     target="_blank"
                   >
@@ -93,7 +94,7 @@ export function HeroSection({ data }: HeroSectionProps) {
           </div>
 
           {description ? (
-            <div className="spaced-dashed-border">
+            <div className="spaced-dashed-border p-5 text-center lg:flex-1">
               <p>{description}</p>
             </div>
           ) : null}

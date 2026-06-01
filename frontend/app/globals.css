@@ -124,3 +124,7 @@ select {
       )
       right top / var(--dash-width) 100% no-repeat;
 }
+
+.section {
+  @apply px-5 sm:px-10;
+}

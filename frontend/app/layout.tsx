@@ -23,7 +23,7 @@ export default function RootLayout({
       lang="en"
       className={`${josefinSans.variable} dark h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="mx-auto min-h-full w-full max-w-[100rem] bg-background text-foreground">
         {children}
       </body>
     </html>
