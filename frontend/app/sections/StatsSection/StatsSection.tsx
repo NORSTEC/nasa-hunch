@@ -11,12 +11,17 @@ type StatsSectionProps = {
 };
 
 const MAX_STAT_VALUE = 15;
+const THEME_STORAGE_KEY = "nasa-hunch-theme";
 
 export function StatsSection({ data }: StatsSectionProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
+  const [logoSpinKey, setLogoSpinKey] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    setIsLightMode(document.documentElement.classList.contains("light"));
+
     if (!sectionRef.current) {
       return;
     }
@@ -40,6 +45,15 @@ export function StatsSection({ data }: StatsSectionProps) {
     return null;
   }
 
+  const toggleLightMode = () => {
+    const nextLightMode = !document.documentElement.classList.contains("light");
+
+    document.documentElement.classList.toggle("light", nextLightMode);
+    localStorage.setItem(THEME_STORAGE_KEY, nextLightMode ? "light" : "dark");
+    setIsLightMode(nextLightMode);
+    setLogoSpinKey((currentKey) => currentKey + 1);
+  };
+
   const stats = data.stats.slice(0, 4);
   const mobileMaxValue = Math.max(...stats.map((stat) => stat.number), 1);
 
@@ -50,15 +64,22 @@ export function StatsSection({ data }: StatsSectionProps) {
         isVisible ? styles.isVisible : ""
       }`}
     >
-      <div className={styles.logoWrap}>
+      <button
+        type="button"
+        className={styles.logoWrap}
+        onClick={toggleLightMode}
+        aria-pressed={isLightMode}
+        aria-label="Bytt fargetema"
+      >
         <Image
-          src="/logo-pink.png"
+          key={logoSpinKey}
+          src={isLightMode ? "/norstec-blue.png" : "/norstec-pink.png"}
           alt=""
           width={180}
           height={180}
           className={styles.logo}
         />
-      </div>
+      </button>
 
       <div className={styles.stats}>
         {stats.map((stat, index) => {

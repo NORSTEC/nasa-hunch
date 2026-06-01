@@ -61,16 +61,12 @@
   100% {
     opacity: 0;
     transform: translateX(-0.2em) scale(0.88);
-    filter: drop-shadow(0 0 0 transparent);
   }
 
   0%,
   85.71% {
     opacity: 1;
     transform: translateX(0) scale(1);
-    filter: drop-shadow(
-      0 0 0.35rem color-mix(in srgb, var(--accent-blue), transparent 35%)
-    );
   }
 }
 
@@ -81,16 +77,12 @@
   100% {
     opacity: 0;
     transform: translateX(-0.2em) scale(0.88);
-    filter: drop-shadow(0 0 0 transparent);
   }
 
   14.29%,
   71.42% {
     opacity: 1;
     transform: translateX(0) scale(1);
-    filter: drop-shadow(
-      0 0 0.35rem color-mix(in srgb, var(--accent-blue), transparent 35%)
-    );
   }
 }
 
@@ -101,15 +93,11 @@
   100% {
     opacity: 0;
     transform: translateX(-0.2em) scale(0.88);
-    filter: drop-shadow(0 0 0 transparent);
   }
 
   28.57%,
   57.14% {
     opacity: 1;
     transform: translateX(0) scale(1);
-    filter: drop-shadow(
-      0 0 0.35rem color-mix(in srgb, var(--accent-blue), transparent 35%)
-    );
   }
 }
