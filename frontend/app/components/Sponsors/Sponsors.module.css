@@ -1,0 +1,286 @@
+.root {
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 5.1vw, var(--type-heading-md));
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding-top: 2.5rem;
+}
+
+.logo {
+  width: clamp(12rem, 34vw, 26rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.word {
+  position: absolute;
+  width: clamp(7rem, 17vw, 13rem);
+  height: clamp(13rem, 25vw, 20rem);
+  color: var(--word-color);
+  font-family: var(--font-heading);
+  font-size: clamp(3.4rem, 7vw, 6.8rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.leftWord {
+  --word-color: var(--accent-pink);
+  left: clamp(0.4rem, 5vw, 5.5rem);
+  top: 50%;
+  transform: translateY(-46%) ;
+}
+
+.rightWord {
+  --word-color: var(--accent-blue);
+  right: clamp(0.4rem, 5vw, 5.5rem);
+  top: 50%;
+  transform: translateY(-48%) ;
+}
+
+.letter {
+  position: absolute;
+  display: inline-block;
+  transform-origin: 50% 50%;
+  animation-duration: 13s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.leftWord .letter:nth-child(1) {
+  left: 8%;
+  top: 0%;
+  animation-name: nasa-letter-one;
+  animation-delay: -1.2s;
+}
+
+.leftWord .letter:nth-child(2) {
+  left: 38%;
+  top: 23%;
+  animation-name: nasa-letter-two;
+  animation-delay: -5.4s;
+}
+
+.leftWord .letter:nth-child(3) {
+  left: 2%;
+  top: 48%;
+  animation-name: nasa-letter-three;
+  animation-delay: -8.1s;
+}
+
+.leftWord .letter:nth-child(4) {
+  left: 34%;
+  top: 69%;
+  animation-name: nasa-letter-four;
+  animation-delay: -3.6s;
+}
+
+.rightWord .letter:nth-child(1) {
+  right: 36%;
+  top: 0%;
+  animation-name: hunch-letter-one;
+  animation-delay: -2.2s;
+}
+
+.rightWord .letter:nth-child(2) {
+  right: 10%;
+  top: 20%;
+  animation-name: hunch-letter-two;
+  animation-delay: -6.8s;
+}
+
+.rightWord .letter:nth-child(3) {
+  right: 38%;
+  top: 40%;
+  animation-name: hunch-letter-three;
+  animation-delay: -9.3s;
+}
+
+.rightWord .letter:nth-child(4) {
+  right: 4%;
+  top: 58%;
+  animation-name: hunch-letter-four;
+  animation-delay: -4.1s;
+}
+
+.rightWord .letter:nth-child(5) {
+  right: 30%;
+  top: 74%;
+  animation-name: hunch-letter-five;
+  animation-delay: -11.2s;
+}
+
+@keyframes nasa-letter-one {
+  0%,
+  100% {
+    transform: translate3d(0.2em, 0, 0) rotate(-10deg);
+  }
+
+  45% {
+    transform: translate3d(0.95em, -0.18em, 0) rotate(8deg);
+  }
+
+  72% {
+    transform: translate3d(-0.15em, 0.22em, 0) rotate(-3deg);
+  }
+}
+
+@keyframes nasa-letter-two {
+  0%,
+  100% {
+    transform: translate3d(-0.1em, 0.08em, 0) rotate(7deg);
+  }
+
+  38% {
+    transform: translate3d(-0.9em, -0.15em, 0) rotate(-8deg);
+  }
+
+  76% {
+    transform: translate3d(0.45em, 0.18em, 0) rotate(3deg);
+  }
+}
+
+@keyframes nasa-letter-three {
+  0%,
+  100% {
+    transform: translate3d(0.05em, -0.08em, 0) rotate(-3deg);
+  }
+
+  42% {
+    transform: translate3d(1.1em, 0.1em, 0) rotate(9deg);
+  }
+
+  70% {
+    transform: translate3d(0.25em, -0.22em, 0) rotate(-7deg);
+  }
+}
+
+@keyframes nasa-letter-four {
+  0%,
+  100% {
+    transform: translate3d(-0.1em, 0, 0) rotate(12deg);
+  }
+
+  48% {
+    transform: translate3d(-1em, 0.16em, 0) rotate(-6deg);
+  }
+
+  78% {
+    transform: translate3d(0.3em, -0.2em, 0) rotate(5deg);
+  }
+}
+
+@keyframes hunch-letter-one {
+  0%,
+  100% {
+    transform: translate3d(0, 0.05em, 0) rotate(10deg);
+  }
+
+  40% {
+    transform: translate3d(-0.8em, -0.18em, 0) rotate(-7deg);
+  }
+
+  75% {
+    transform: translate3d(0.35em, 0.2em, 0) rotate(4deg);
+  }
+}
+
+@keyframes hunch-letter-two {
+  0%,
+  100% {
+    transform: translate3d(-0.1em, 0, 0) rotate(-9deg);
+  }
+
+  44% {
+    transform: translate3d(0.75em, 0.14em, 0) rotate(8deg);
+  }
+
+  73% {
+    transform: translate3d(-0.45em, -0.2em, 0) rotate(-3deg);
+  }
+}
+
+@keyframes hunch-letter-three {
+  0%,
+  100% {
+    transform: translate3d(0.2em, -0.05em, 0) rotate(5deg);
+  }
+
+  46% {
+    transform: translate3d(-0.9em, 0.18em, 0) rotate(-10deg);
+  }
+
+  80% {
+    transform: translate3d(0.4em, -0.16em, 0) rotate(6deg);
+  }
+}
+
+@keyframes hunch-letter-four {
+  0%,
+  100% {
+    transform: translate3d(0.05em, 0.08em, 0) rotate(-6deg);
+  }
+
+  36% {
+    transform: translate3d(0.95em, -0.15em, 0) rotate(7deg);
+  }
+
+  69% {
+    transform: translate3d(-0.25em, 0.2em, 0) rotate(-2deg);
+  }
+}
+
+@keyframes hunch-letter-five {
+  0%,
+  100% {
+    transform: translate3d(-0.15em, 0, 0) rotate(12deg);
+  }
+
+  50% {
+    transform: translate3d(0.85em, 0.2em, 0) rotate(-6deg);
+  }
+
+  79% {
+    transform: translate3d(-0.45em, -0.18em, 0) rotate(3deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .stage {
+    min-height: 18rem;
+  }
+
+  .logo {
+    width: min(56vw, 16rem);
+  }
+
+  .word {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+    width: 5rem;
+    height: 12rem;
+  }
+
+  .leftWord {
+    left: 0.2rem;
+  }
+
+  .rightWord {
+    right: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    animation: none;
+  }
+}
