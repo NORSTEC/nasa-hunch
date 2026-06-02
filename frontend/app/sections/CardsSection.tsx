@@ -1,10 +1,12 @@
 "use client";
 
 import AutoScroll from "embla-carousel-auto-scroll";
+import type { EmblaPluginType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { MdFlip } from "react-icons/md";
 import { portableTextToPlainText } from "@/sanity/utils/portableText";
 import type { CardItem, CardsSection as CardsSectionData } from "@/sanity/types";
 
@@ -42,18 +44,20 @@ function FlipCard({
   };
 
   return (
-    <button
-      type="button"
-      className="group block w-[16rem] lg:w-[23rem] cursor-pointer overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1"
-      onClick={toggleFlip}
-      aria-pressed={isFlipped}
-    >
+    <div className="group block w-[16rem] lg:w-[23rem] overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1">
       <span
         className={`relative block aspect-[3/5] lg:aspect-[2/3] w-full transition-transform duration-500 [transform-style:preserve-3d] ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
       >
-        <span className="absolute inset-0 z-10 block overflow-hidden bg-background [backface-visibility:hidden] [transform:rotateY(0deg)]">
+        <button
+          type="button"
+          className={`absolute inset-0 block cursor-pointer overflow-hidden bg-background p-0 text-foreground [backface-visibility:hidden] [transform:rotateY(0deg)] ${
+            isFlipped ? "pointer-events-none z-0" : "z-10"
+          }`}
+          onClick={toggleFlip}
+          aria-pressed={isFlipped}
+        >
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -66,19 +70,40 @@ function FlipCard({
             </span>
           )}
           <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
-        </span>
+        </button>
 
-        <span className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden bg-background py-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] px-2">
+        <span
+          className={`absolute inset-0 flex cursor-pointer flex-col items-center justify-center overflow-hidden bg-background py-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] px-2 ${
+            isFlipped ? "z-10" : "pointer-events-none z-0"
+          }`}
+          onClick={toggleFlip}
+        >
           <span
-            className="relative z-30 block h-full max-h-full overflow-y-auto overscroll-contain whitespace-pre-line px-1 font-heading !text-[clamp(0.6rem,0.8rem+0.75vw,1.1rem)] leading-snug"
-            onWheel={(event) => event.stopPropagation()}
+            className="relative z-30 block min-h-0 flex-1 cursor-auto overflow-y-auto overscroll-contain whitespace-pre-line px-1 font-heading !text-[clamp(0.6rem,0.8rem+0.75vw,1.1rem)] leading-snug [touch-action:pan-y] [-webkit-overflow-scrolling:touch]"
+            tabIndex={isFlipped ? 0 : -1}
+            onClick={(event) => event.stopPropagation()}
+            onWheelCapture={(event) => event.stopPropagation()}
+            onPointerDownCapture={(event) => event.stopPropagation()}
+            onTouchStartCapture={(event) => event.stopPropagation()}
+            onTouchMoveCapture={(event) => event.stopPropagation()}
           >
             {description}
           </span>
+          <button
+            type="button"
+            className="dotted-button dotted-button-pink dotted-icon-button relative z-30 mt-3 shrink-0 cursor-pointer"
+            onClick={(event) => {
+              event.stopPropagation();
+              toggleFlip();
+            }}
+            aria-label="Snu kortet tilbake"
+          >
+            <MdFlip aria-hidden="true" />
+          </button>
           <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
         </span>
       </span>
-    </button>
+    </div>
   );
 }
 
@@ -91,6 +116,22 @@ export function CardsSection({ data }: CardsSectionProps) {
   );
   const cards = useMemo(() => data?.cards ?? [], [data]);
   const hasFlippedCard = flippedCardIds.size > 0;
+  const emblaPlugins = useMemo(() => {
+    const plugins: EmblaPluginType[] = [
+      AutoScroll({
+        playOnInit: false,
+        speed: 0.75,
+        stopOnInteraction: false,
+        direction: "forward",
+      }),
+    ];
+
+    if (!hasFlippedCard) {
+      plugins.push(WheelGesturesPlugin({ forceWheelAxis: "x" }));
+    }
+
+    return plugins;
+  }, [hasFlippedCard]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -100,15 +141,7 @@ export function CardsSection({ data }: CardsSectionProps) {
       skipSnaps: true,
       containScroll: false,
     },
-    [
-      AutoScroll({
-        playOnInit: false,
-        speed: 0.75,
-        stopOnInteraction: false,
-        direction: "forward",
-      }),
-      WheelGesturesPlugin({ forceWheelAxis: "x" }),
-    ],
+    emblaPlugins,
   );
 
   const slides = useMemo(() => {

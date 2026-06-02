@@ -151,6 +151,14 @@ select {
   --dotted-button-color: var(--accent-pink);
 }
 
+.dotted-icon-button {
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 0;
+  padding: 0;
+  font-size: 1.35rem;
+}
+
 .dotted-button:hover {
   color: var(--foreground) !important;
   border-color: var(--dotted-button-color, var(--accent-pink));
