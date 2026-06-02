@@ -89,7 +89,7 @@ export function CardsSection({ data }: CardsSectionProps) {
   const [flippedCardIds, setFlippedCardIds] = useState<Set<string>>(
     () => new Set(),
   );
-  const cards = data?.cards ?? [];
+  const cards = useMemo(() => data?.cards ?? [], [data]);
   const hasFlippedCard = flippedCardIds.size > 0;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -199,13 +199,6 @@ export function CardsSection({ data }: CardsSectionProps) {
 
     return () => cancelAnimationFrame(animationFrame);
   }, [emblaApi, hasFlippedCard]);
-
-  useEffect(() => {
-    const next = new Set<string>();
-
-    flippedCardIdsRef.current = next;
-    setFlippedCardIds(next);
-  }, [cards]);
 
   if (!cards.length) {
     return null;

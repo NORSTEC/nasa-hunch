@@ -20,10 +20,12 @@ export function StatsSection({ data }: StatsSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    setIsLightMode(document.documentElement.classList.contains("light"));
+    const animationFrame = requestAnimationFrame(() => {
+      setIsLightMode(document.documentElement.classList.contains("light"));
+    });
 
     if (!sectionRef.current) {
-      return;
+      return () => cancelAnimationFrame(animationFrame);
     }
 
     const observer = new IntersectionObserver(
@@ -38,7 +40,10 @@ export function StatsSection({ data }: StatsSectionProps) {
 
     observer.observe(sectionRef.current);
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+    };
   }, []);
 
   if (!data?.stats?.length) {

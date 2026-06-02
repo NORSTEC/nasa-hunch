@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { RiArrowRightLongLine } from "react-icons/ri";
 import { SlSocialLinkedin, SlSocialFacebook } from "react-icons/sl";
@@ -26,31 +29,96 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
+const HERO_SLIDE_DURATION = 4500;
+
 type HeroSectionProps = {
   data: HeroSectionData | null;
 };
 
 export function HeroSection({ data }: HeroSectionProps) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [progressKey, setProgressKey] = useState(0);
+
+  const images = data?.images?.filter((image) => image.asset?.url) ?? [];
+  const hasCarousel = images.length > 1;
+
+  const showImage = (targetIndex: number) => {
+    setActiveImageIndex(targetIndex);
+    setProgressKey((currentKey) => currentKey + 1);
+  };
+
+  useEffect(() => {
+    if (!hasCarousel) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      showImage((activeImageIndex + 1) % images.length);
+    }, HERO_SLIDE_DURATION);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [activeImageIndex, hasCarousel, images.length]);
+
   if (!data) {
     return null;
   }
 
-  const heroImage = data.images?.[0];
   const description = portableTextToPlainText(data.description);
-
   return (
     <section className="section pt-0!">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
-        <div className="relative aspect-square w-full lg:max-w-[35rem] flex-none overflow-hidden bg-background">
-          {heroImage?.asset?.url ? (
-            <Image
-              src={heroImage.asset.url}
-              alt={heroImage.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 33rem, 100vw"
-              className="object-cover"
-            />
+        <div className="w-full flex-none lg:max-w-[35rem]">
+          <div className="relative aspect-square w-full overflow-hidden bg-background">
+            {images.map((image, index) => (
+                <div
+                  className={`absolute inset-0 transition-opacity duration-500 ease-out ${
+                    index === activeImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                  key={image._key ?? image.asset?.url ?? index}
+                >
+                  {image.asset?.url ? (
+                    <Image
+                      src={image.asset.url}
+                      alt={image.alt}
+                      fill
+                      priority={index === 0}
+                      sizes="(min-width: 1024px) 33rem, 100vw"
+                      className="object-cover"
+                    />
+                  ) : null}
+                </div>
+              ))}
+          </div>
+
+          {hasCarousel ? (
+            <div className="mt-5 flex gap-4">
+              {images.map((image, index) => {
+                const isActive = index === activeImageIndex;
+
+                return (
+                  <button
+                    type="button"
+                    className="relative h-7 flex-1 cursor-pointer overflow-hidden rounded-full border-2 border-dashed border-accent-pink bg-transparent p-0"
+                    key={image._key ?? image.asset?.url ?? index}
+                    onClick={() => showImage(index)}
+                    aria-label={`Vis hero bilde ${index + 1}`}
+                    aria-pressed={isActive}
+                  >
+                    {isActive ? (
+                      <span
+                        key={`${progressKey}-${activeImageIndex}-${index}`}
+                        className="absolute inset-y-0 left-0 rounded-full bg-accent-pink"
+                        style={{
+                          animation: `hero-progress-fill ${HERO_SLIDE_DURATION}ms linear forwards`,
+                        }}
+                      />
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
           ) : null}
         </div>
 

@@ -21,7 +21,10 @@ export function CarouselSection({ data }: CarouselSectionProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
   const loopDistanceRef = useRef(1);
-  const images = data?.images?.filter((image) => image.asset?.url) ?? [];
+  const images = useMemo(
+    () => data?.images?.filter((image) => image.asset?.url) ?? [],
+    [data],
+  );
 
   const carouselImages = useMemo(() => [...images, ...images], [images]);
 
