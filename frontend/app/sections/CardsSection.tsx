@@ -15,20 +15,37 @@ type CardsSectionProps = {
 type AutoScrollPluginApi = {
   autoScroll?: {
     play?: () => void;
+    stop?: () => void;
+    isPlaying?: () => boolean;
   };
 };
 
-function FlipCard({ card }: { card: CardItem }) {
+function FlipCard({
+  card,
+  cardId,
+  onFlipChange,
+}: {
+  card: CardItem;
+  cardId: string;
+  onFlipChange: (cardId: string, isFlipped: boolean) => void;
+}) {
   const [isFlipped, setIsFlipped] = useState(false);
   const image = card.image;
   const imageUrl = image.asset?.url;
   const description = portableTextToPlainText(card.description);
 
+  const toggleFlip = () => {
+    const next = !isFlipped;
+
+    setIsFlipped(next);
+    onFlipChange(cardId, next);
+  };
+
   return (
     <button
       type="button"
       className="group block w-[16rem] lg:w-[23rem] cursor-pointer overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1"
-      onClick={() => setIsFlipped((current) => !current)}
+      onClick={toggleFlip}
       aria-pressed={isFlipped}
     >
       <span
@@ -51,8 +68,11 @@ function FlipCard({ card }: { card: CardItem }) {
           <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
         </span>
 
-        <span className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden bg-background p-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] sm:p-7">
-          <span className="block max-h-full overflow-hidden whitespace-pre-line font-heading !text-[clamp(0.6rem,0.6rem+0.75vw,1.1rem)] leading-snug">
+        <span className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden bg-background py-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] px-2">
+          <span
+            className="relative z-30 block h-full max-h-full overflow-y-auto overscroll-contain whitespace-pre-line px-1 font-heading !text-[clamp(0.6rem,0.8rem+0.75vw,1.1rem)] leading-snug"
+            onWheel={(event) => event.stopPropagation()}
+          >
             {description}
           </span>
           <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
@@ -64,8 +84,13 @@ function FlipCard({ card }: { card: CardItem }) {
 
 export function CardsSection({ data }: CardsSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const flippedCardIdsRef = useRef<Set<string>>(new Set());
   const [enableEmbla, setEnableEmbla] = useState(false);
+  const [flippedCardIds, setFlippedCardIds] = useState<Set<string>>(
+    () => new Set(),
+  );
   const cards = data?.cards ?? [];
+  const hasFlippedCard = flippedCardIds.size > 0;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
@@ -94,6 +119,26 @@ export function CardsSection({ data }: CardsSectionProps) {
     return cards.length < 5 ? [...cards, ...cards] : cards;
   }, [cards, enableEmbla]);
 
+  const handleFlipChange = (cardId: string, isFlipped: boolean) => {
+    const next = new Set(flippedCardIdsRef.current);
+    const autoScroll = (emblaApi?.plugins() as AutoScrollPluginApi | undefined)
+      ?.autoScroll;
+
+    if (isFlipped) {
+      next.add(cardId);
+      autoScroll?.stop?.();
+    } else {
+      next.delete(cardId);
+    }
+
+    flippedCardIdsRef.current = next;
+    setFlippedCardIds(next);
+
+    if (!next.size && enableEmbla) {
+      requestAnimationFrame(() => autoScroll?.play?.());
+    }
+  };
+
   useEffect(() => {
     const check = () => {
       const container = containerRef.current;
@@ -117,17 +162,50 @@ export function CardsSection({ data }: CardsSectionProps) {
   }, [cards.length]);
 
   useEffect(() => {
-    if (!enableEmbla) {
-      return;
-    }
-
     const autoScroll = (emblaApi?.plugins() as AutoScrollPluginApi | undefined)
       ?.autoScroll;
 
-    if (autoScroll) {
+    if (!autoScroll) {
+      return;
+    }
+
+    if (hasFlippedCard) {
+      autoScroll.stop?.();
+    } else if (enableEmbla) {
       requestAnimationFrame(() => autoScroll.play?.());
     }
-  }, [enableEmbla, emblaApi]);
+  }, [emblaApi, enableEmbla, hasFlippedCard]);
+
+  useEffect(() => {
+    if (!hasFlippedCard) {
+      return;
+    }
+
+    let animationFrame = 0;
+    const keepAutoScrollStopped = () => {
+      const autoScroll = (emblaApi?.plugins() as AutoScrollPluginApi | undefined)
+        ?.autoScroll;
+
+      if (autoScroll?.isPlaying?.()) {
+        autoScroll.stop?.();
+      } else {
+        autoScroll?.stop?.();
+      }
+
+      animationFrame = requestAnimationFrame(keepAutoScrollStopped);
+    };
+
+    keepAutoScrollStopped();
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [emblaApi, hasFlippedCard]);
+
+  useEffect(() => {
+    const next = new Set<string>();
+
+    flippedCardIdsRef.current = next;
+    setFlippedCardIds(next);
+  }, [cards]);
 
   if (!cards.length) {
     return null;
@@ -136,7 +214,7 @@ export function CardsSection({ data }: CardsSectionProps) {
   return (
     <section className="py-15 lg:py-25 overflow-hidden">
       <div className="px-5 sm:px-10  flex items-center gap-5 uppercase">
-        <h2 className="m-0 max-w-[24rem] whitespace-pre-line">
+        <h2 className="m-0 max-w-[24rem] whitespace-pre-line text-[clamp(1.5rem,2.7vw,var(--type-heading-lg))]!">
           {data?.title}
         </h2>
         <Image
@@ -154,14 +232,22 @@ export function CardsSection({ data }: CardsSectionProps) {
             className="embla__container"
             ref={!enableEmbla ? containerRef : null}
           >
-          {slides.map((card, index) => (
+          {slides.map((card, index) => {
+            const cardId = `${card._key}-${index}`;
+
+            return (
             <div
               className="embla__slide min-w-[18rem] lg:min-w-[25rem]"
-              key={`${card._key}-${index}`}
+              key={cardId}
             >
-              <FlipCard card={card} />
+              <FlipCard
+                card={card}
+                cardId={cardId}
+                onFlipChange={handleFlipChange}
+              />
             </div>
-          ))}
+            );
+          })}
           </div>
         </div>
       </div>

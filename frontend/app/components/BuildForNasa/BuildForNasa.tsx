@@ -66,15 +66,15 @@ export function BuildForNasa() {
           </span>
         </button>
 
-        <p className={styles.text}>
-          <span>Vi bygger for</span>
+        <div className={styles.text}>
+          <h2>Vi bygger for</h2>
           <span className={styles.arrows} aria-hidden="true">
             {ARROWS.map((arrow) => (
               <RiArrowRightLongLine key={arrow} className={styles.arrow} />
             ))}
           </span>
-          <span>NASA</span>
-        </p>
+          <h2>NASA</h2>
+        </div>
       </div>
     </div>
   );
