@@ -12,8 +12,8 @@ type CarouselSectionProps = {
 
 type CarouselMode = "play" | "speed" | "pause";
 
-const NORMAL_LOOP_SECONDS = 34;
-const SPEED_LOOP_SECONDS = NORMAL_LOOP_SECONDS / 2;
+const NORMAL_LOOP_SECONDS = 30;
+const SPEED_LOOP_SECONDS = NORMAL_LOOP_SECONDS / 10;
 
 export function CarouselSection({ data }: CarouselSectionProps) {
   const [mode, setMode] = useState<CarouselMode>("play");
