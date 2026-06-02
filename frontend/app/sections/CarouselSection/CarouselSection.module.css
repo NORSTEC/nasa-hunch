@@ -50,7 +50,14 @@
 }
 
 .speedIcon {
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(1.18);
+  transform-origin: 50% 50%;
+  margin-left: 0.25rem;
+}
+
+.pauseIcon {
+  transform: scale(1.05);
+  transform-origin: 50% 50%;
 }
 
 .viewport {

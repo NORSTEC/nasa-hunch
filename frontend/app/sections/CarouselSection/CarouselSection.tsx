@@ -125,7 +125,7 @@ export function CarouselSection({ data }: CarouselSectionProps) {
             aria-label="Pause karusell"
             aria-pressed={mode === "pause"}
           >
-            <IoPauseSharp aria-hidden="true" />
+            <IoPauseSharp className={styles.pauseIcon} aria-hidden="true" />
           </button>
         </div>
       </div>
