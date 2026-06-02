@@ -240,7 +240,7 @@ export function CardsSection({ data }: CardsSectionProps) {
   return (
     <section className="py-15 lg:py-25 overflow-hidden">
       <div className="px-5 sm:px-10  flex items-center gap-5 uppercase">
-        <h2 className="m-0 max-w-[24rem] whitespace-pre-line text-[clamp(1.5rem,2.7vw,var(--type-heading-lg))]!">
+        <h2 className="m-0 whitespace-pre-line  text-[clamp(1.5rem,2.7vw,var(--type-heading-lg))]!">
           {data?.title}
         </h2>
         <Image
