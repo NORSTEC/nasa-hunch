@@ -44,10 +44,10 @@ export default async function Home() {
       <HeroSection data={homePage.hero} />
       <BuildForNasa />
       <StatsSection data={homePage.stats} />
+        <ContactForm />
+        <Sponsors />
       <CarouselSection data={homePage.carousel} />
-      <Sponsors />
-      <ContactForm />
-      <Footer data={homePage.hero} />
+        <Footer data={homePage.hero} />
     </main>
   );
 }
