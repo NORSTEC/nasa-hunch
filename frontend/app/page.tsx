@@ -3,11 +3,12 @@ import { ContactForm } from "@/app/components/ContactForm/ContactForm";
 import { Footer } from "@/app/components/Footer/Footer";
 import { Navbar } from "@/app/components/Navbar";
 import { Sponsors } from "@/app/components/Sponsors/Sponsors";
-import { CarouselSection } from "@/app/sections/CarouselSection/CarouselSection";
+import { CardsSection } from "@/app/sections/CardsSection";
 import { HeroSection } from "@/app/sections/HeroSection";
 import { StatsSection } from "@/app/sections/StatsSection/StatsSection";
 import { homePageQuery } from "@/sanity/queries";
 import type { HomePage } from "@/sanity/types";
+import {CarouselSection} from "@/app/sections/CarouselSection/CarouselSection";
 
 const SANITY_PROJECT_ID = "4k911a4x";
 const SANITY_DATASET = "production";
@@ -44,10 +45,11 @@ export default async function Home() {
       <HeroSection data={homePage.hero} />
       <BuildForNasa />
       <StatsSection data={homePage.stats} />
-        <ContactForm />
-        <Sponsors />
-      <CarouselSection data={homePage.carousel} />
-        <Footer data={homePage.hero} />
+      <CardsSection data={homePage.cards} />
+      <ContactForm />
+      <Sponsors />
+        <CarouselSection data={homePage.carousel} />
+      <Footer data={homePage.hero} />
     </main>
   );
 }

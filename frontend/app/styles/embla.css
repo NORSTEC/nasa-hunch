@@ -1,0 +1,22 @@
+.embla {
+  overflow: hidden;
+  height: auto;
+}
+
+.embla__viewport {
+  width: 100%;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  display: flex;
+}
+
+.draft-mode {
+  position: fixed;
+  background-color: gray;
+}
