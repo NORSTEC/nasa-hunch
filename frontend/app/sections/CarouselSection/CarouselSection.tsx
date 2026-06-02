@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoPauseSharp, IoPlayBackSharp, IoPlaySharp } from "react-icons/io5";
 import type { CarouselSection as CarouselSectionData } from "@/sanity/types";
-import styles from "./CarouselSection/CarouselSection.module.css";
+import styles from "./CarouselSection.module.css";
 
 type CarouselSectionProps = {
   data: CarouselSectionData | null;
@@ -128,8 +128,6 @@ export function CarouselSection({ data }: CarouselSectionProps) {
             <IoPauseSharp aria-hidden="true" />
           </button>
         </div>
-
-        <h2 className={styles.title}>Prosjekter</h2>
       </div>
 
       <div className={styles.viewport}>

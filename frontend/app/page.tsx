@@ -3,6 +3,7 @@ import { ContactForm } from "@/app/components/ContactForm/ContactForm";
 import { Footer } from "@/app/components/Footer/Footer";
 import { Navbar } from "@/app/components/Navbar";
 import { Sponsors } from "@/app/components/Sponsors/Sponsors";
+import { CarouselSection } from "@/app/sections/CarouselSection/CarouselSection";
 import { HeroSection } from "@/app/sections/HeroSection";
 import { StatsSection } from "@/app/sections/StatsSection/StatsSection";
 import { homePageQuery } from "@/sanity/queries";
@@ -43,6 +44,7 @@ export default async function Home() {
       <HeroSection data={homePage.hero} />
       <BuildForNasa />
       <StatsSection data={homePage.stats} />
+      <CarouselSection data={homePage.carousel} />
       <Sponsors />
       <ContactForm />
       <Footer data={homePage.hero} />
