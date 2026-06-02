@@ -2,14 +2,11 @@
   overflow: hidden;
 }
 
-.header {
-
-}
-
 .controls {
   display: inline-flex;
   align-items: center;
   gap: .75rem;
+  padding-bottom: .75rem;
 }
 
 .controlButton {
