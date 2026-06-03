@@ -112,20 +112,20 @@ export function StatsSection({ data }: StatsSectionProps) {
           );
 
           return (
-            <div
-              key={stat._key}
-              className={`${styles.stat} ${styles[`variant${index + 1}`]}`}
-              style={
-                {
-                  "--stat-width": `${width}%`,
-                  "--stat-mobile-width": `${mobileWidth}%`,
-                } as CSSProperties
-              }
-            >
+              <div
+                  key={stat._key}
+                  data-value={stat.number}
+                  className={`${styles.stat} ${styles[`variant${index + 1}`]}`}
+                  style={
+                    {
+                      "--card-height": `${14 + stat.number * 1.2}rem`,
+                    } as CSSProperties
+                  }
+              >
               <span className={styles.statText}>
-                {stat.number} {stat.text}
+                <span>{stat.text}</span>
               </span>
-            </div>
+              </div>
           );
         })}
       </div>
