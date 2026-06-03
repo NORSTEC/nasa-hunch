@@ -8,10 +8,10 @@
   --foreground: #f7f3e3;
   --accent-blue: #3772ff;
   --accent-pink: #e54f6d;
-  --type-small: clamp(0.5rem, 0.46rem + 0.16vw, 0.62rem);
-  --type-base: clamp(1.125rem, 0.95rem + 0.75vw, 1.5rem);
-  --type-heading-lg: clamp(2.25rem, 1.9rem + 1.5vw, 3rem);
-  --type-heading-md: clamp(1.625rem, 1.45rem + 0.75vw, 2rem);
+  --type-small: clamp(0.45rem, 0.42rem + 0.12vw, 0.55rem);
+  --type-base: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+  --type-heading-lg: clamp(1.8rem, 1.6rem + 0.8vw, 2.25rem);
+  --type-heading-md: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
 }
 
 @theme inline {
@@ -21,8 +21,8 @@
   --color-accent-pink: var(--accent-pink);
   --font-sans: var(--font-josefin-sans);
   --font-heading: "Iosevka Charon", var(--font-josefin-sans), ui-monospace,
-    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
+  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+  monospace;
   --text-page-small: var(--type-small);
   --text-page-base: var(--type-base);
   --text-page-heading-lg: var(--type-heading-lg);
@@ -50,6 +50,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-josefin-sans), system-ui, sans-serif;
   font-size: var(--type-base);
+  font-weight: 300;
   line-height: 1.35;
 }
 
@@ -60,6 +61,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+  font-weight: 300;
   line-height: 1.1;
   text-wrap: balance;
 }
@@ -87,9 +89,9 @@ select {
 .spaced-dashed-border {
   position: relative;
   --dash-color: var(--foreground);
-  --dash-width: 2px;
-  --dash-length: 10px;
-  --dash-gap: 10px;
+  --dash-width: 1px;
+  --dash-length: 8px;
+  --dash-gap: 8px;
 }
 
 .spaced-dashed-border::before {
@@ -98,34 +100,34 @@ select {
   pointer-events: none;
   content: "";
   background:
-    repeating-linear-gradient(
-        to right,
-        var(--dash-color) 0 var(--dash-length),
-        transparent var(--dash-length)
-          calc(var(--dash-length) + var(--dash-gap))
-      )
-      left top / 100% var(--dash-width) no-repeat,
-    repeating-linear-gradient(
-        to right,
-        var(--dash-color) 0 var(--dash-length),
-        transparent var(--dash-length)
-          calc(var(--dash-length) + var(--dash-gap))
-      )
-      left bottom / 100% var(--dash-width) no-repeat,
-    repeating-linear-gradient(
-        to bottom,
-        var(--dash-color) 0 var(--dash-length),
-        transparent var(--dash-length)
-          calc(var(--dash-length) + var(--dash-gap))
-      )
-      left top / var(--dash-width) 100% no-repeat,
-    repeating-linear-gradient(
-        to bottom,
-        var(--dash-color) 0 var(--dash-length),
-        transparent var(--dash-length)
-          calc(var(--dash-length) + var(--dash-gap))
-      )
-      right top / var(--dash-width) 100% no-repeat;
+          repeating-linear-gradient(
+                  to right,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left top / 100% var(--dash-width) no-repeat,
+          repeating-linear-gradient(
+                  to right,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left bottom / 100% var(--dash-width) no-repeat,
+          repeating-linear-gradient(
+                  to bottom,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left top / var(--dash-width) 100% no-repeat,
+          repeating-linear-gradient(
+                  to bottom,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          right top / var(--dash-width) 100% no-repeat;
 }
 
 .dotted-button {
@@ -142,9 +144,9 @@ select {
   line-height: 1;
   text-decoration: none;
   transition:
-    color 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease;
+          color 180ms ease,
+          background-color 180ms ease,
+          border-color 180ms ease;
 }
 
 .dotted-button-pink {
