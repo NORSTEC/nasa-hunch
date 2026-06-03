@@ -91,7 +91,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                 </div>
               ))}
           </div>
-
+          {/*
           {hasCarousel ? (
             <div className="mt-5 flex gap-4">
               {images.map((image, index) => {
@@ -119,8 +119,9 @@ export function HeroSection({ data }: HeroSectionProps) {
                 );
               })}
             </div>
-          ) : null}
+          ) : null} */}
         </div>
+
 
         <div className="flex flex-col gap-10 lg:w-[25rem] lg:mx-auto lg:h-full">
           <div className="spaced-dashed-border text-center p-5 lg:flex-1">
