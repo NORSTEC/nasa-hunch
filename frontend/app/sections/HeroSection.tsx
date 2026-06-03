@@ -69,7 +69,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section className="section pt-0!">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
-        <div className="w-full flex-none lg:max-w-[35rem]">
+        <div className="w-full flex-none lg:max-w-[45rem]">
           <div className="relative aspect-square w-full overflow-hidden bg-background">
             {images.map((image, index) => (
                 <div
@@ -100,7 +100,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                 return (
                   <button
                     type="button"
-                    className="relative h-7 flex-1 cursor-pointer overflow-hidden rounded-full border-2 border-dashed border-accent-pink bg-transparent p-0"
+                    className="relative h-7 flex-1 cursor-pointer overflow-hidden rounded-full border-2 border-accent-pink bg-transparent p-0"
                     key={image._key ?? image.asset?.url ?? index}
                     onClick={() => showImage(index)}
                     aria-label={`Vis hero bilde ${index + 1}`}
@@ -122,7 +122,7 @@ export function HeroSection({ data }: HeroSectionProps) {
           ) : null}
         </div>
 
-        <div className="flex flex-col gap-10 lg:flex-1">
+        <div className="flex flex-col gap-10 lg:w-[25rem]">
           <div className="spaced-dashed-border text-center p-5">
             <p className="uppercase leading-tight">NASA HUNCH</p>
             <p className="mt-1 flex items-center justify-center gap-2 uppercase leading-tight">
