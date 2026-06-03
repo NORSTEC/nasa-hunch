@@ -25,6 +25,11 @@
   overflow: hidden;
 
   opacity: 0;
+  transform: scale(0.02);
+
+  transition:
+          transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 600ms ease;
 }
 
 .variant1 {
@@ -52,7 +57,8 @@
 }
 
 .isVisible .stat {
-  animation: stat-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  opacity: 1;
+  transform: scale(1);
 }
 
 .statText {
@@ -62,10 +68,17 @@
   text-transform: uppercase;
 
   opacity: 0;
+  transform: translateY(0.5rem);
+
+  transition:
+          opacity 400ms ease,
+          transform 400ms ease;
 }
 
 .isVisible .statText {
-  animation: stat-text-in 400ms ease-out 450ms both;
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 250ms;
 }
 
 .number {
@@ -77,34 +90,6 @@
   font-size: clamp(2rem, 5vw, 4rem);
   line-height: 1;
   font-weight: 700;
-}
-
-@keyframes stat-grow {
-  0% {
-    opacity: 0;
-    transform: scale(0.02);
-  }
-
-  60% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes stat-text-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.5rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (max-width: 767px) {
@@ -132,9 +117,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .isVisible .stat,
-  .isVisible .statText {
-    animation: none;
+  .stat,
+  .statText {
+    transition: none;
   }
 
   .stat {
@@ -144,5 +129,6 @@
 
   .statText {
     opacity: 1;
+    transform: none;
   }
 }

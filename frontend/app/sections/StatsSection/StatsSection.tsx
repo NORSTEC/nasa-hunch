@@ -20,12 +20,11 @@ export function StatsSection({ data }: StatsSectionProps) {
 
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
+                setIsVisible(entry.isIntersecting);
             },
-            { threshold: 0.35 },
+            {
+                threshold: 0.35,
+            },
         );
 
         observer.observe(sectionRef.current);
