@@ -1,134 +1,95 @@
 "use client";
 
-import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import type { StatsSection as StatsSectionData } from "@/sanity/types";
 import styles from "./StatsSection.module.css";
 
 type StatsSectionProps = {
-  data: StatsSectionData | null;
+    data: StatsSectionData | null;
 };
 
-const MAX_STAT_VALUE = 15;
-const THEME_STORAGE_KEY = "nasa-hunch-theme";
-
 export function StatsSection({ data }: StatsSectionProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
-  const [logoSpinKey, setLogoSpinKey] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const animationFrame = requestAnimationFrame(() => {
-      setIsLightMode(document.documentElement.classList.contains("light"));
-    });
+    useEffect(() => {
+        if (!sectionRef.current) {
+            return;
+        }
 
-    if (!sectionRef.current) {
-      return () => cancelAnimationFrame(animationFrame);
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.35 },
+        );
+
+        observer.observe(sectionRef.current);
+
+        return () => observer.disconnect();
+    }, []);
+
+    if (!data?.stats?.length) {
+        return null;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 },
+    const stats = data.stats.slice(0, 4);
+
+    const leftColumn = [stats[0], stats[2]].filter(Boolean);
+    const rightColumn = [stats[1], stats[3]].filter(Boolean);
+
+    return (
+        <section
+            ref={sectionRef}
+            className={`section ${styles.section} ${
+                isVisible ? styles.isVisible : ""
+            }`}
+        >
+            <div className={styles.stats}>
+                <div className={styles.column}>
+                    {leftColumn.map((stat, index) => (
+                        <div
+                            key={stat._key}
+                            className={`${styles.stat} ${
+                                styles[`variant${index === 0 ? 1 : 3}`]
+                            }`}
+                            style={
+                                {
+                                    "--card-height": `${2 + stat.number * 1.5}rem`,
+                                } as CSSProperties
+                            }
+                        >
+                            <span className={styles.statText}>{stat.text}</span>
+
+                            <span className={styles.number}>{stat.number}</span>
+                        </div>
+                    ))}
+                </div>
+
+                <div className={styles.column}>
+                    {rightColumn.map((stat, index) => (
+                        <div
+                            key={stat._key}
+                            className={`${styles.stat} ${
+                                styles[`variant${index === 0 ? 2 : 4}`]
+                            }`}
+                            style={
+                                {
+                                    "--card-height": `${2 + stat.number * 1.5}rem`,
+                                } as CSSProperties
+                            }
+                        >
+                            <span className={styles.statText}>{stat.text}</span>
+
+                            <span className={styles.number}>{stat.number}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
-
-    observer.observe(sectionRef.current);
-
-    return () => {
-      cancelAnimationFrame(animationFrame);
-      observer.disconnect();
-    };
-  }, []);
-
-  if (!data?.stats?.length) {
-    return null;
-  }
-
-  const toggleLightMode = () => {
-    const nextLightMode = !document.documentElement.classList.contains("light");
-
-    document.documentElement.classList.toggle("light", nextLightMode);
-    localStorage.setItem(THEME_STORAGE_KEY, nextLightMode ? "light" : "dark");
-    setIsLightMode(nextLightMode);
-    setLogoSpinKey((currentKey) => currentKey + 1);
-  };
-
-  const stats = data.stats.slice(0, 4);
-  const mobileMaxValue = Math.max(...stats.map((stat) => stat.number), 1);
-
-  return (
-    <section
-      ref={sectionRef}
-      className={`section ${styles.section} ${
-        isVisible ? styles.isVisible : ""
-      }`}
-    >
-      <button
-        type="button"
-        className={styles.logoWrap}
-        onClick={toggleLightMode}
-        aria-pressed={isLightMode}
-        aria-label="Bytt fargetema"
-      >
-        <span key={logoSpinKey} className={styles.logoStack}>
-          <Image
-            src="/norstec-pink.png"
-            alt=""
-            width={180}
-            height={180}
-            priority
-            className={`${styles.logo} ${
-              isLightMode ? "" : styles.logoVisible
-            }`}
-          />
-          <Image
-            src="/norstec-blue.png"
-            alt=""
-            width={180}
-            height={180}
-            priority
-            className={`${styles.logo} ${
-              isLightMode ? styles.logoVisible : ""
-            }`}
-          />
-        </span>
-      </button>
-
-      <div className={styles.stats}>
-        {stats.map((stat, index) => {
-          const width = Math.min(
-            100,
-            Math.max(8, (stat.number / MAX_STAT_VALUE) * 100),
-          );
-          const mobileWidth = Math.min(
-            100,
-            Math.max(8, (stat.number / mobileMaxValue) * 100),
-          );
-
-          return (
-              <div
-                  key={stat._key}
-                  data-value={stat.number}
-                  className={`${styles.stat} ${styles[`variant${index + 1}`]}`}
-                  style={
-                    {
-                      "--card-height": `${14 + stat.number * 1.2}rem`,
-                    } as CSSProperties
-                  }
-              >
-              <span className={styles.statText}>
-                <span>{stat.text}</span>
-              </span>
-              </div>
-          );
-        })}
-      </div>
-    </section>
-  );
 }
