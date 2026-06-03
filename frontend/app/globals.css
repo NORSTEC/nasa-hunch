@@ -195,5 +195,5 @@ select {
 }
 
 .section {
-  @apply px-5 sm:px-10 py-20 lg:py-40;
+    @apply px-5 sm:px-10 py-12 ;
 }

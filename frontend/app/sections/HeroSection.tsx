@@ -69,7 +69,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section className="section pt-0!">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
-        <div className="w-full flex-none lg:max-w-[45rem]">
+        <div className="w-full flex-none lg:max-w-[40rem]">
           <div className="relative aspect-square w-full overflow-hidden bg-background">
             {images.map((image, index) => (
                 <div
