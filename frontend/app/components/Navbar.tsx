@@ -27,7 +27,7 @@ export function Navbar({ data }: NavbarProps) {
   }, []);
 
   return (
-    <header className="px-5 sm:px-10 py-10">
+    <header className="px-5 py-6 sm:px-10">
       <nav className="flex items-center justify-between gap-6">
         <div aria-label="NASA HUNCH home" className="block">
           {logo?.asset?.url ? (
@@ -37,7 +37,7 @@ export function Navbar({ data }: NavbarProps) {
               width={logo.asset.metadata?.dimensions?.width ?? 220}
               height={logo.asset.metadata?.dimensions?.height ?? 80}
               priority
-              className="h-14 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           ) : (
             <span className="font-heading uppercase">NASA HUNCH</span>

@@ -37,14 +37,12 @@ type HeroSectionProps = {
 
 export function HeroSection({ data }: HeroSectionProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [progressKey, setProgressKey] = useState(0);
 
   const images = data?.images?.filter((image) => image.asset?.url) ?? [];
   const hasCarousel = images.length > 1;
 
   const showImage = (targetIndex: number) => {
     setActiveImageIndex(targetIndex);
-    setProgressKey((currentKey) => currentKey + 1);
   };
 
   useEffect(() => {
@@ -67,10 +65,10 @@ export function HeroSection({ data }: HeroSectionProps) {
 
   const description = portableTextToPlainText(data.description);
   return (
-    <section className="section pt-0!">
-      <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
-        <div className="w-full flex-none lg:max-w-[40rem]">
-          <div className="relative aspect-square w-full overflow-hidden bg-background">
+    <section className="section pt-0! lg:pb-8!">
+      <div className="flex flex-col gap-10 lg:h-[calc(100svh-8rem)] lg:flex-row lg:items-stretch">
+        <div className="w-full flex-none lg:min-w-0 lg:flex-1">
+          <div className="relative aspect-square w-full overflow-hidden bg-background lg:h-full lg:aspect-auto">
             {images.map((image, index) => (
                 <div
                   className={`absolute inset-0 transition-opacity duration-500 ease-out ${
@@ -90,6 +88,7 @@ export function HeroSection({ data }: HeroSectionProps) {
                   ) : null}
                 </div>
               ))}
+            <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
           </div>
           {/*
           {hasCarousel ? (
@@ -123,8 +122,8 @@ export function HeroSection({ data }: HeroSectionProps) {
         </div>
 
 
-        <div className="flex flex-col gap-10 lg:w-[25rem] lg:mx-auto lg:h-full">
-          <div className="spaced-dashed-border text-center p-5 lg:flex-1">
+        <div className="flex flex-col gap-10 lg:ml-auto lg:w-[25rem] lg:flex-none">
+          <div className="spaced-dashed-border text-center p-5">
             <p className="uppercase leading-tight">NASA HUNCH</p>
             <p className="mt-1 flex items-center justify-center gap-2 uppercase leading-tight">
               HQ <RiArrowRightLongLine aria-hidden="true"/> OSLO, NORGE
@@ -163,7 +162,7 @@ export function HeroSection({ data }: HeroSectionProps) {
           </div>
 
           {description ? (
-              <div className="spaced-dashed-border p-5 text-center lg:flex-1">
+              <div className="spaced-dashed-border p-5 text-center">
                 <p>{description}</p>
               </div>
           ) : null}

@@ -143,16 +143,18 @@ export function CarouselSection({ data }: CarouselSectionProps) {
               key={`${image._key ?? image.asset?.url}-${index}`}
               className={styles.slide}
             >
-              <Image
-                src={image.asset?.url ?? ""}
-                alt={image.alt}
-                width={image.asset?.metadata?.dimensions?.width ?? 520}
-                height={image.asset?.metadata?.dimensions?.height ?? 680}
-                sizes="(max-width: 767px) 72vw, 28vw"
-                placeholder={image.asset?.metadata?.lqip ? "blur" : "empty"}
-                blurDataURL={image.asset?.metadata?.lqip}
-                className={styles.image}
-              />
+              <div className={`spaced-dashed-border ${styles.imageFrame}`}>
+                <Image
+                  src={image.asset?.url ?? ""}
+                  alt={image.alt}
+                  width={image.asset?.metadata?.dimensions?.width ?? 520}
+                  height={image.asset?.metadata?.dimensions?.height ?? 680}
+                  sizes="(max-width: 767px) 72vw, 28vw"
+                  placeholder={image.asset?.metadata?.lqip ? "blur" : "empty"}
+                  blurDataURL={image.asset?.metadata?.lqip}
+                  className={styles.image}
+                />
+              </div>
             </figure>
           ))}
         </div>

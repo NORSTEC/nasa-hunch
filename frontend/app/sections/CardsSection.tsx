@@ -1,7 +1,6 @@
 "use client";
 
 import AutoScroll from "embla-carousel-auto-scroll";
-import type { EmblaPluginType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import Image from "next/image";
@@ -35,6 +34,7 @@ function FlipCard({
   const image = card.image;
   const imageUrl = image.asset?.url;
   const description = portableTextToPlainText(card.description);
+  const descriptionRef = useRef<HTMLSpanElement>(null);
 
   const toggleFlip = () => {
     const next = !isFlipped;
@@ -43,6 +43,47 @@ function FlipCard({
     onFlipChange(cardId, next);
   };
 
+  useEffect(() => {
+    const descriptionElement = descriptionRef.current;
+
+    if (!descriptionElement) {
+      return;
+    }
+
+    const stopCarouselGesture = (event: Event) => {
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    };
+
+    descriptionElement.addEventListener("wheel", stopCarouselGesture, {
+      capture: true,
+    });
+    descriptionElement.addEventListener("pointerdown", stopCarouselGesture, {
+      capture: true,
+    });
+    descriptionElement.addEventListener("touchstart", stopCarouselGesture, {
+      capture: true,
+    });
+    descriptionElement.addEventListener("touchmove", stopCarouselGesture, {
+      capture: true,
+    });
+
+    return () => {
+      descriptionElement.removeEventListener("wheel", stopCarouselGesture, {
+        capture: true,
+      });
+      descriptionElement.removeEventListener("pointerdown", stopCarouselGesture, {
+        capture: true,
+      });
+      descriptionElement.removeEventListener("touchstart", stopCarouselGesture, {
+        capture: true,
+      });
+      descriptionElement.removeEventListener("touchmove", stopCarouselGesture, {
+        capture: true,
+      });
+    };
+  }, []);
+
   return (
     <div className="group block w-[16rem] lg:w-[23rem] overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1">
       <span
@@ -50,38 +91,44 @@ function FlipCard({
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
       >
-        <button
-          type="button"
-          className={`absolute inset-0 block cursor-pointer overflow-hidden bg-background p-0 text-foreground [backface-visibility:hidden] [transform:rotateY(0deg)] ${
+        <span
+          className={`absolute inset-0 block overflow-hidden bg-background p-0 text-foreground [backface-visibility:hidden] [transform:rotateY(0deg)] ${
             isFlipped ? "pointer-events-none z-0" : "z-10"
           }`}
-          onClick={toggleFlip}
-          aria-pressed={isFlipped}
         >
           {imageUrl ? (
             <img
               src={imageUrl}
               alt={image.alt}
-              className="block h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              className="block h-full w-full object-cover"
             />
           ) : (
             <span className="flex h-full w-full items-center justify-center font-heading text-page-small uppercase">
               Mangler bilde
             </span>
           )}
+          <span className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-32 bg-gradient-to-t from-background via-background/70 to-transparent" />
+          <button
+            type="button"
+            className="dotted-button dotted-button-pink dotted-icon-button absolute bottom-4 left-1/2 z-30 -translate-x-1/2 cursor-pointer"
+            onClick={toggleFlip}
+            aria-label="Snu kortet"
+            aria-pressed={isFlipped}
+          >
+            <MdFlip aria-hidden="true" />
+          </button>
           <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
-        </button>
+        </span>
 
         <span
-          className={`absolute inset-0 flex cursor-pointer flex-col items-center justify-center overflow-hidden bg-background py-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] px-2 ${
+          className={`absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-background py-5 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] px-2 ${
             isFlipped ? "z-10" : "pointer-events-none z-0"
           }`}
-          onClick={toggleFlip}
         >
           <span
+            ref={descriptionRef}
             className="relative z-30 block min-h-0 flex-1 cursor-auto overflow-y-auto overscroll-contain whitespace-pre-line px-1 font-heading !text-[clamp(0.6rem,0.8rem+0.75vw,1.1rem)] leading-snug [touch-action:pan-y] [-webkit-overflow-scrolling:touch]"
             tabIndex={isFlipped ? 0 : -1}
-            onClick={(event) => event.stopPropagation()}
             onWheelCapture={(event) => event.stopPropagation()}
             onPointerDownCapture={(event) => event.stopPropagation()}
             onTouchStartCapture={(event) => event.stopPropagation()}
@@ -92,11 +139,9 @@ function FlipCard({
           <button
             type="button"
             className="dotted-button dotted-button-pink dotted-icon-button relative z-30 mt-3 shrink-0 cursor-pointer"
-            onClick={(event) => {
-              event.stopPropagation();
-              toggleFlip();
-            }}
+            onClick={toggleFlip}
             aria-label="Snu kortet tilbake"
+            aria-pressed={isFlipped}
           >
             <MdFlip aria-hidden="true" />
           </button>
@@ -116,22 +161,18 @@ export function CardsSection({ data }: CardsSectionProps) {
   );
   const cards = useMemo(() => data?.cards ?? [], [data]);
   const hasFlippedCard = flippedCardIds.size > 0;
-  const emblaPlugins = useMemo(() => {
-    const plugins: EmblaPluginType[] = [
+  const emblaPlugins = useMemo(
+    () => [
       AutoScroll({
         playOnInit: false,
         speed: 0.75,
         stopOnInteraction: false,
         direction: "forward",
       }),
-    ];
-
-    if (!hasFlippedCard) {
-      plugins.push(WheelGesturesPlugin({ forceWheelAxis: "x" }));
-    }
-
-    return plugins;
-  }, [hasFlippedCard]);
+      WheelGesturesPlugin({ forceWheelAxis: "x" }),
+    ],
+    [],
+  );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
