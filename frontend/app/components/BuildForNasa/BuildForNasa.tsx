@@ -1,71 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { RiArrowRightLongLine } from "react-icons/ri";
 import styles from "./BuildForNasa.module.css";
 
 const ARROWS = [0, 1, 2] as const;
-const THEME_STORAGE_KEY = "nasa-hunch-theme";
 
 export function BuildForNasa() {
-  const [isLightMode, setIsLightMode] = useState(false);
-  const [logoSpinKey, setLogoSpinKey] = useState(0);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const updateTheme = () => setIsLightMode(root.classList.contains("light"));
-    const observer = new MutationObserver(updateTheme);
-
-    updateTheme();
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const toggleLightMode = () => {
-    const nextLightMode = !document.documentElement.classList.contains("light");
-
-    document.documentElement.classList.toggle("light", nextLightMode);
-    localStorage.setItem(THEME_STORAGE_KEY, nextLightMode ? "light" : "dark");
-    setIsLightMode(nextLightMode);
-    setLogoSpinKey((currentKey) => currentKey + 1);
-  };
-
   return (
     <div className="section">
       <div className={styles.root}>
-        <button
-          type="button"
-          className={styles.logoButton}
-          onClick={toggleLightMode}
-          aria-pressed={isLightMode}
-          aria-label="Bytt fargetema"
-        >
-          <span key={logoSpinKey} className={styles.logoStack}>
-            <Image
-              src="/norstec-blue.png"
-              alt=""
-              width={80}
-              height={80}
-              priority
-              className={`${styles.logo} ${
-                isLightMode ? "" : styles.logoVisible
-              }`}
-            />
-            <Image
-              src="/norstec-pink.png"
-              alt=""
-              width={80}
-              height={80}
-              priority
-              className={`${styles.logo} ${
-                isLightMode ? styles.logoVisible : ""
-              }`}
-            />
-          </span>
-        </button>
-
         <div className={styles.text}>
           <h2>Vi bygger for</h2>
           <span className={styles.arrows} aria-hidden="true">
@@ -75,6 +19,15 @@ export function BuildForNasa() {
           </span>
           <h2>NASA</h2>
         </div>
+
+        <Image
+          src="/mascot2.png"
+          alt=""
+          width={150}
+          height={190}
+          priority
+          className="float-soft h-auto w-20 object-contain drop-shadow-[0.18rem_0.22rem_0_var(--background)] [--float-duration:6.7s] [--float-x-end:0.14rem] [--float-y-end:-0.85rem] [--float-rotate-end:5deg] [animation-delay:-2.4s] [transform-origin:50%_55%]"
+        />
       </div>
     </div>
   );

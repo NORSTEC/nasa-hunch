@@ -13,6 +13,8 @@ type CardsSectionProps = {
   data: CardsSectionData | null;
 };
 
+const THEME_STORAGE_KEY = "nasa-hunch-theme";
+
 type AutoScrollPluginApi = {
   autoScroll?: {
     play?: () => void;
@@ -156,6 +158,8 @@ export function CardsSection({ data }: CardsSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const flippedCardIdsRef = useRef<Set<string>>(new Set());
   const [enableEmbla, setEnableEmbla] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
+  const [logoSpinKey, setLogoSpinKey] = useState(0);
   const [flippedCardIds, setFlippedCardIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -192,6 +196,15 @@ export function CardsSection({ data }: CardsSectionProps) {
 
     return cards.length < 5 ? [...cards, ...cards] : cards;
   }, [cards, enableEmbla]);
+
+  const toggleLightMode = () => {
+    const nextLightMode = !document.documentElement.classList.contains("light");
+
+    document.documentElement.classList.toggle("light", nextLightMode);
+    localStorage.setItem(THEME_STORAGE_KEY, nextLightMode ? "light" : "dark");
+    setIsLightMode(nextLightMode);
+    setLogoSpinKey((currentKey) => currentKey + 1);
+  };
 
   const handleFlipChange = (cardId: string, isFlipped: boolean) => {
     const next = new Set(flippedCardIdsRef.current);
@@ -234,6 +247,17 @@ export function CardsSection({ data }: CardsSectionProps) {
 
     return () => window.removeEventListener("resize", check);
   }, [cards.length]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const updateTheme = () => setIsLightMode(root.classList.contains("light"));
+    const observer = new MutationObserver(updateTheme);
+
+    updateTheme();
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const autoScroll = (emblaApi?.plugins() as AutoScrollPluginApi | undefined)
@@ -284,13 +308,36 @@ export function CardsSection({ data }: CardsSectionProps) {
         <h2 className="m-0 whitespace-pre-line  text-[clamp(1.5rem,2.7vw,var(--type-heading-lg))]!">
           {data?.title}
         </h2>
-        <Image
-          src="/mascot2.png"
-          alt=""
-          width={120}
-          height={150}
-          className="w-20 sm:w-30 object-contain"
-        />
+        <button
+          type="button"
+          className="theme-logo-button"
+          onClick={toggleLightMode}
+          aria-pressed={isLightMode}
+          aria-label="Bytt fargetema"
+        >
+          <span key={logoSpinKey} className="theme-logo-stack">
+            <Image
+              src="/norstec-blue.png"
+              alt=""
+              width={90}
+              height={90}
+              priority
+              className={`theme-logo-image ${
+                isLightMode ? "" : "theme-logo-image-visible"
+              }`}
+            />
+            <Image
+              src="/norstec-pink.png"
+              alt=""
+              width={90}
+              height={90}
+              priority
+              className={`theme-logo-image ${
+                isLightMode ? "theme-logo-image-visible" : ""
+              }`}
+            />
+          </span>
+        </button>
       </div>
 
       <div className="embla">

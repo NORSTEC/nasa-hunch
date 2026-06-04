@@ -88,7 +88,6 @@ export function HeroSection({ data }: HeroSectionProps) {
                   ) : null}
                 </div>
               ))}
-            <span className="spaced-dashed-border pointer-events-none !absolute inset-0 z-20 [--dash-color:var(--foreground)] [--dash-gap:10px] [--dash-length:10px] [--dash-width:2px]" />
           </div>
           {/*
           {hasCarousel ? (
