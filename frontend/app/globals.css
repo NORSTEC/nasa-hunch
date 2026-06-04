@@ -168,7 +168,9 @@ select {
 }
 
 .theme-logo-button {
+  display: inline-flex;
   flex: 0 0 auto;
+  align-items: center;
   padding: 0;
   border: 0;
   background: transparent;
@@ -183,8 +185,10 @@ select {
 .theme-logo-stack {
   position: relative;
   display: block;
-  width: clamp(2rem, 7vw, 4.5rem);
-  height: clamp(2rem, 7vw, 4.5rem);
+  aspect-ratio: 1;
+  width: auto;
+  height: 100%;
+  min-height: clamp(3rem, 8vw, 4.5rem);
   animation: theme-logo-spin 700ms cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
