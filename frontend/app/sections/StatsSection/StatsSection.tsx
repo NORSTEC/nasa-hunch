@@ -11,6 +11,7 @@ type StatsSectionProps = {
 
 export function StatsSection({ data }: StatsSectionProps) {
     const [isVisible, setIsVisible] = useState(false);
+    const [expandedStatKey, setExpandedStatKey] = useState<string | null>(null);
     const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -40,6 +41,11 @@ export function StatsSection({ data }: StatsSectionProps) {
 
     const leftColumn = [stats[0], stats[2]].filter(Boolean);
     const rightColumn = [stats[1], stats[3]].filter(Boolean);
+    const toggleStat = (statKey: string) => {
+        setExpandedStatKey((currentKey) =>
+            currentKey === statKey ? null : statKey,
+        );
+    };
 
     return (
         <section
@@ -51,41 +57,65 @@ export function StatsSection({ data }: StatsSectionProps) {
             <div className={styles.stats}>
                 <div className={styles.column}>
                     {leftColumn.map((stat, index) => (
-                        <div
+                        <button
+                            type="button"
                             key={stat._key}
                             className={`${styles.stat} ${
                                 styles[`variant${index === 0 ? 1 : 3}`]
-                            }`}
+                            } ${expandedStatKey === stat._key ? styles.isExpanded : ""}`}
+                            onClick={() => toggleStat(stat._key)}
+                            aria-expanded={expandedStatKey === stat._key}
                             style={
                                 {
                                     "--card-height": `${2 + stat.number * 1.5}rem`,
                                 } as CSSProperties
                             }
                         >
-                            <span className={styles.statText}>{stat.text}</span>
-
                             <span className={styles.number}>{stat.number}</span>
-                        </div>
+                            <span className={styles.content}>
+                                <span className={styles.statText}>{stat.text}</span>
+                                {stat.detail ? (
+                                    <>
+                                        <span className={styles.detailReserve} aria-hidden="true">
+                                            {stat.detail}
+                                        </span>
+                                        <span className={styles.detail}>{stat.detail}</span>
+                                    </>
+                                ) : null}
+                            </span>
+                        </button>
                     ))}
                 </div>
 
                 <div className={styles.column}>
                     {rightColumn.map((stat, index) => (
-                        <div
+                        <button
+                            type="button"
                             key={stat._key}
                             className={`${styles.stat} ${
                                 styles[`variant${index === 0 ? 2 : 4}`]
-                            }`}
+                            } ${expandedStatKey === stat._key ? styles.isExpanded : ""}`}
+                            onClick={() => toggleStat(stat._key)}
+                            aria-expanded={expandedStatKey === stat._key}
                             style={
                                 {
                                     "--card-height": `${2 + stat.number * 1.5}rem`,
                                 } as CSSProperties
                             }
                         >
-                            <span className={styles.statText}>{stat.text}</span>
-
                             <span className={styles.number}>{stat.number}</span>
-                        </div>
+                            <span className={styles.content}>
+                                <span className={styles.statText}>{stat.text}</span>
+                                {stat.detail ? (
+                                    <>
+                                        <span className={styles.detailReserve} aria-hidden="true">
+                                            {stat.detail}
+                                        </span>
+                                        <span className={styles.detail}>{stat.detail}</span>
+                                    </>
+                                ) : null}
+                            </span>
+                        </button>
                     ))}
                 </div>
             </div>

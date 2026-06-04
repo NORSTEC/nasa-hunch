@@ -17,6 +17,13 @@ export const statItem = defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'detail',
+      title: 'Detail',
+      type: 'text',
+      rows: 3,
+      description: 'Shown when the stat is clicked.',
+    }),
   ],
   preview: {
     select: {

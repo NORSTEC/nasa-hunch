@@ -7,7 +7,8 @@ export const statsSectionFields = `
   stats[] {
     _key,
     number,
-    text
+    text,
+    detail
   }
 `
 

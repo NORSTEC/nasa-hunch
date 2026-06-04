@@ -16,43 +16,86 @@
 
 .stat {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   width: 100%;
-  height: var(--card-height);
+  min-height: clamp(8.5rem, var(--card-height), 18rem);
 
   padding: 1rem;
-  border-radius: 1.5rem;
+  border: 0;
   overflow: hidden;
+  --stat-color: var(--accent-pink);
+  --dash-color: currentColor;
+  --dash-width: 2px;
+  --dash-length: 10px;
+  --dash-gap: 10px;
+  background:
+          repeating-linear-gradient(
+                  to right,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left top / 100% var(--dash-width) no-repeat,
+          repeating-linear-gradient(
+                  to right,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left bottom / 100% var(--dash-width) no-repeat,
+          repeating-linear-gradient(
+                  to bottom,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          left top / var(--dash-width) 100% no-repeat,
+          repeating-linear-gradient(
+                  to bottom,
+                  var(--dash-color) 0 var(--dash-length),
+                  transparent var(--dash-length)
+                  calc(var(--dash-length) + var(--dash-gap))
+          )
+          right top / var(--dash-width) 100% no-repeat;
+  font-family: var(--font-heading);
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
 
   opacity: 0;
   transform: scale(0.02);
 
   transition:
           transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
-          opacity 600ms ease;
+          opacity 600ms ease,
+          color 180ms ease,
+          background-color 180ms ease;
 }
 
 .variant1 {
-  background: #f7d7df;
-  color: #0f1a20;
+  --stat-color: var(--accent-pink);
+  color: var(--stat-color);
   transform-origin: top left;
 }
 
 .variant2 {
-  background: #e54f6d;
-  color: #f7f3e3;
+  --stat-color: var(--accent-blue);
+  color: var(--stat-color);
   transform-origin: top right;
 }
 
 .variant3 {
-  background: #dbe5ff;
-  color: #0f1a20;
+  --stat-color: var(--accent-blue);
+  color: var(--stat-color);
   transform-origin: bottom left;
 }
 
 .variant4 {
-  background: #3772ff;
-  color: #f7f3e3;
+  --stat-color: var(--accent-pink);
+  color: var(--stat-color);
   transform-origin: bottom right;
 }
 
@@ -61,11 +104,36 @@
   transform: scale(1);
 }
 
+.isVisible .stat:hover,
+.isVisible .stat:focus-visible,
+.isVisible .isExpanded {
+  --dash-color: var(--stat-color);
+  color: var(--foreground);
+  background-color: var(--stat-color);
+  transform: scale(1);
+}
+
+.stat:focus-visible {
+  outline: 2px dashed var(--foreground);
+  outline-offset: 0.35rem;
+}
+
+.content {
+  display: grid;
+  grid-template-areas:
+          "detail"
+          "title";
+  align-content: end;
+  gap: 0.55rem;
+  min-height: 0;
+}
+
 .statText {
-  font-family: var(--font-heading);
-  font-size: clamp(0.7rem, 1vw, 1rem);
-  line-height: 1.2;
-  text-transform: uppercase;
+  grid-area: title;
+  display: block;
+  color: currentColor;
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  line-height: 1.15;
 
   opacity: 0;
   transform: translateY(0.5rem);
@@ -81,14 +149,59 @@
   transition-delay: 250ms;
 }
 
-.number {
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+.detailReserve,
+.detail {
+  grid-area: detail;
+  display: block;
+  font-family: var(--font-josefin-sans), system-ui, sans-serif;
+  font-size: var(--type-base);
+  line-height: 1.25;
+  text-transform: none;
+}
 
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 4rem);
+.detailReserve {
+  visibility: hidden;
+}
+
+.detail {
+  color: var(--foreground);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.65rem);
+  transition:
+          opacity 180ms ease,
+          transform 180ms ease,
+          visibility 0ms linear 180ms;
+}
+
+.isExpanded .detail {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+          opacity 180ms ease,
+          transform 180ms ease,
+          visibility 0ms linear 0ms;
+}
+
+.stat:hover .statText,
+.stat:focus-visible .statText,
+.isExpanded .statText {
+  color: var(--foreground);
+}
+
+.number {
+  display: block;
+  color: currentColor;
+  font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 1;
+  transition: color 180ms ease;
+}
+
+.stat:hover .number,
+.stat:focus-visible .number,
+.isExpanded .number {
+  color: var(--foreground);
 }
 
 @media (max-width: 767px) {
@@ -102,16 +215,26 @@
 
   .stat {
     padding: 0.75rem;
+    min-height: clamp(4.75rem, calc(var(--card-height) * 0.8), 13rem);
+  }
+
+  .content {
+    gap: 0.4rem;
   }
 
   .number {
-    left: 0.75rem;
-    bottom: 0.75rem;
-    font-size: 1.75rem;
+    font-size: clamp(2.2rem, 9vw, 3rem);
   }
 
   .statText {
-    font-size: 0.65rem;
+    font-size: clamp(0.9rem, 3.4vw, 1.1rem);
+    line-height: 1.1;
+  }
+
+  .detailReserve,
+  .detail {
+    font-size: clamp(0.68rem, 2.7vw, 0.82rem);
+    line-height: 1.25;
   }
 }
 
