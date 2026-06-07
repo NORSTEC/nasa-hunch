@@ -70,24 +70,24 @@ export function HeroSection({ data }: HeroSectionProps) {
         <div className="w-full flex-none lg:min-w-0 lg:flex-1">
           <div className="relative aspect-square w-full overflow-hidden bg-background lg:h-full lg:aspect-auto">
             {images.map((image, index) => (
-                <div
-                  className={`absolute inset-0 transition-opacity duration-500 ease-out ${
-                    index === activeImageIndex ? "opacity-100" : "opacity-0"
-                  }`}
-                  key={image._key ?? image.asset?.url ?? index}
-                >
-                  {image.asset?.url ? (
-                    <Image
-                      src={image.asset.url}
-                      alt={image.alt}
-                      fill
-                      priority={index === 0}
-                      sizes="(min-width: 1024px) 33rem, 100vw"
-                      className="object-cover"
-                    />
-                  ) : null}
-                </div>
-              ))}
+              <div
+                className={`absolute inset-0 transition-opacity duration-500 ease-out ${
+                  index === activeImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+                key={image._key ?? image.asset?.url ?? index}
+              >
+                {image.asset?.url ? (
+                  <Image
+                    src={image.asset.url}
+                    alt={image.alt}
+                    fill
+                    priority={index === 0}
+                    sizes="(min-width: 1024px) 33rem, 100vw"
+                    className="object-cover"
+                  />
+                ) : null}
+              </div>
+            ))}
           </div>
           {/*
           {hasCarousel ? (
@@ -120,24 +120,23 @@ export function HeroSection({ data }: HeroSectionProps) {
           ) : null} */}
         </div>
 
-
         <div className="flex flex-col gap-10 lg:ml-auto lg:w-[25rem] lg:flex-none">
           <div className="spaced-dashed-border text-center p-5">
             <p className="uppercase leading-tight">NASA HUNCH</p>
             <p className="mt-1 flex items-center justify-center gap-2 uppercase leading-tight">
-              HQ <RiArrowRightLongLine aria-hidden="true"/> OSLO, NORGE
+              HQ <RiArrowRightLongLine aria-hidden="true" /> OSLO, NORGE
             </p>
             <div className="flex items-center justify-center">
               <a
-                  href={`mailto:${data.contactBlock.email}`}
-                  className="mt-1 block transition hover:text-accent-pink w-fit"
+                href={`mailto:${data.contactBlock.email}`}
+                className="mt-1 block transition hover:text-accent-pink w-fit"
               >
                 {data.contactBlock.email}
               </a>
             </div>
 
             <div className="mt-10 flex items-center justify-center gap-10">
-              {SOCIAL_LINKS.map(({key, label, className, Icon}) => {
+              {SOCIAL_LINKS.map(({ key, label, className, Icon }) => {
                 const href = data.contactBlock.socials?.[key];
 
                 if (!href) {
@@ -145,25 +144,25 @@ export function HeroSection({ data }: HeroSectionProps) {
                 }
 
                 return (
-                    <a
-                        key={key}
-                        href={href}
-                        aria-label={label}
-                        className={`${className} text-4xl! leading-none transition hover:scale-110 hover:text-foreground`}
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                      <Icon aria-hidden="true"/>
-                    </a>
+                  <a
+                    key={key}
+                    href={href}
+                    aria-label={label}
+                    className={`${className} text-4xl! leading-none transition hover:scale-110 hover:text-foreground`}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <Icon aria-hidden="true" />
+                  </a>
                 );
               })}
             </div>
           </div>
 
           {description ? (
-              <div className="spaced-dashed-border p-5 text-center">
-                <p>{description}</p>
-              </div>
+            <div className="spaced-dashed-border p-5 text-center">
+              <p>{description}</p>
+            </div>
           ) : null}
         </div>
       </div>

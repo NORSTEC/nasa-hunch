@@ -9,16 +9,15 @@ const josefinSans = Josefin_Sans({
   display: "swap",
 });
 
-
 export const metadata: Metadata = {
   title: "🛰️ NASA HUNCH Norway",
   description:
-      "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
+    "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
 
   openGraph: {
     title: "🛰️ NASA HUNCH Norway",
     description:
-        "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
+      "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
     type: "website",
     images: [
       {
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NASA HUNCH Norway",
     description:
-        "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
+      "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
     images: ["/NasaHunchOG.png"],
   },
 };

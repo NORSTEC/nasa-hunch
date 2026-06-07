@@ -8,7 +8,7 @@ import { HeroSection } from "@/app/sections/HeroSection";
 import { StatsSection } from "@/app/sections/StatsSection/StatsSection";
 import { homePageQuery } from "@/sanity/queries";
 import type { HomePage } from "@/sanity/types";
-import {CarouselSection} from "@/app/sections/CarouselSection/CarouselSection";
+import { CarouselSection } from "@/app/sections/CarouselSection/CarouselSection";
 
 const SANITY_PROJECT_ID = "4k911a4x";
 const SANITY_DATASET = "production";
@@ -48,7 +48,7 @@ export default async function Home() {
       <CardsSection data={homePage.cards} />
       <ContactForm />
       <Sponsors />
-        <CarouselSection data={homePage.carousel} />
+      <CarouselSection data={homePage.carousel} />
       <Footer data={homePage.hero} />
     </main>
   );

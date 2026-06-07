@@ -38,7 +38,10 @@ export function Footer({ data }: FooterProps) {
 
   return (
     <footer className="section pt-0! pb-5! grid items-end gap-8 text-center md:grid-cols-[minmax(8rem,1fr)_auto_minmax(8rem,1fr)] md:gap-[clamp(1.5rem,4vw,4rem)]">
-      <div className="order-2 flex min-w-0 items-center justify-center gap-2 md:order-none md:gap-[clamp(0.4rem,1.6vw,1.2rem)]" aria-hidden="true">
+      <div
+        className="order-2 flex min-w-0 items-center justify-center gap-2 md:order-none md:gap-[clamp(0.4rem,1.6vw,1.2rem)]"
+        aria-hidden="true"
+      >
         <Image
           src="/mascot2.png"
           alt=""
@@ -68,7 +71,6 @@ export function Footer({ data }: FooterProps) {
           className="float-soft h-auto w-16 object-contain drop-shadow-[0.18rem_0.22rem_0_var(--background)] [--float-duration:7.1s] [--float-x-end:-0.1rem] [--float-y-end:-0.45rem] [--float-rotate-end:4deg] [animation-delay:-3.1s] [transform-origin:50%_55%] md:hidden"
         />
       </div>
-
 
       <div className="order-1 grid justify-items-center gap-5  md:order-none">
         <h4 className="m-0 pb-20 lg:pb-40 uppercase text-accent-pink">
@@ -106,7 +108,10 @@ export function Footer({ data }: FooterProps) {
         </p>
       </div>
 
-      <div className="hidden min-w-0 items-center justify-center gap-[clamp(0.4rem,1.6vw,1.2rem)] md:flex" aria-hidden="true">
+      <div
+        className="hidden min-w-0 items-center justify-center gap-[clamp(0.4rem,1.6vw,1.2rem)] md:flex"
+        aria-hidden="true"
+      >
         <Image
           src="/mascot1.png"
           alt=""

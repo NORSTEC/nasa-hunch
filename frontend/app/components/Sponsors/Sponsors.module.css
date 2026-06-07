@@ -39,14 +39,14 @@
   --word-color: var(--accent-pink);
   left: clamp(1rem, 6vw, 6.5rem);
   top: 50%;
-  transform: translateY(-46%) ;
+  transform: translateY(-46%);
 }
 
 .rightWord {
   --word-color: var(--accent-blue);
   right: clamp(1rem, 6vw, 6.5rem);
   top: 50%;
-  transform: translateY(-48%) ;
+  transform: translateY(-48%);
 }
 
 .letter {

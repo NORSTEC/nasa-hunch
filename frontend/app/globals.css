@@ -20,9 +20,9 @@
   --color-accent-blue: var(--accent-blue);
   --color-accent-pink: var(--accent-pink);
   --font-sans: var(--font-josefin-sans);
-  --font-heading: "Iosevka Charon", var(--font-josefin-sans), ui-monospace,
-  SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-  monospace;
+  --font-heading:
+    "Iosevka Charon", var(--font-josefin-sans), ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --text-page-small: var(--type-small);
   --text-page-base: var(--type-base);
   --text-page-heading-lg: var(--type-heading-lg);
@@ -100,34 +100,34 @@ select {
   pointer-events: none;
   content: "";
   background:
-          repeating-linear-gradient(
-                  to right,
-                  var(--dash-color) 0 var(--dash-length),
-                  transparent var(--dash-length)
-                  calc(var(--dash-length) + var(--dash-gap))
-          )
-          left top / 100% var(--dash-width) no-repeat,
-          repeating-linear-gradient(
-                  to right,
-                  var(--dash-color) 0 var(--dash-length),
-                  transparent var(--dash-length)
-                  calc(var(--dash-length) + var(--dash-gap))
-          )
-          left bottom / 100% var(--dash-width) no-repeat,
-          repeating-linear-gradient(
-                  to bottom,
-                  var(--dash-color) 0 var(--dash-length),
-                  transparent var(--dash-length)
-                  calc(var(--dash-length) + var(--dash-gap))
-          )
-          left top / var(--dash-width) 100% no-repeat,
-          repeating-linear-gradient(
-                  to bottom,
-                  var(--dash-color) 0 var(--dash-length),
-                  transparent var(--dash-length)
-                  calc(var(--dash-length) + var(--dash-gap))
-          )
-          right top / var(--dash-width) 100% no-repeat;
+    repeating-linear-gradient(
+        to right,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left top / 100% var(--dash-width) no-repeat,
+    repeating-linear-gradient(
+        to right,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left bottom / 100% var(--dash-width) no-repeat,
+    repeating-linear-gradient(
+        to bottom,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      left top / var(--dash-width) 100% no-repeat,
+    repeating-linear-gradient(
+        to bottom,
+        var(--dash-color) 0 var(--dash-length),
+        transparent var(--dash-length)
+          calc(var(--dash-length) + var(--dash-gap))
+      )
+      right top / var(--dash-width) 100% no-repeat;
 }
 
 .dotted-button {
@@ -144,9 +144,9 @@ select {
   line-height: 1;
   text-decoration: none;
   transition:
-          color 180ms ease,
-          background-color 180ms ease,
-          border-color 180ms ease;
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
 }
 
 .dotted-button-pink {
@@ -244,5 +244,5 @@ select {
 }
 
 .section {
-    @apply px-5 sm:px-10 py-16 ;
+  @apply px-5 sm:px-10 py-16;
 }

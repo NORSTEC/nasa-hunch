@@ -27,7 +27,10 @@ export function Sponsors() {
         Takk til Sparebankstiftelsen DNB for etableringsstøtte i 2024.
       </h2>
 
-      <div className={styles.stage} aria-label="Takk til NASA HUNCH og Sparebankstiftelsen DNB">
+      <div
+        className={styles.stage}
+        aria-label="Takk til NASA HUNCH og Sparebankstiftelsen DNB"
+      >
         <div className={`${styles.word} ${styles.leftWord}`} aria-hidden="true">
           {LEFT_WORD.split("").map((letter, index) => (
             <span key={`${letter}-${index}`} className={styles.letter}>
@@ -44,7 +47,10 @@ export function Sponsors() {
           className={styles.logo}
         />
 
-        <div className={`${styles.word} ${styles.rightWord}`} aria-hidden="true">
+        <div
+          className={`${styles.word} ${styles.rightWord}`}
+          aria-hidden="true"
+        >
           {RIGHT_WORD.split("").map((letter, index) => (
             <span key={`${letter}-${index}`} className={styles.letter}>
               {letter}

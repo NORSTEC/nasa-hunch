@@ -107,7 +107,9 @@ export function ContactForm() {
           </label>
 
           <label className={styles.field}>
-            <span className="sr-only">{activeMode.organizationPlaceholder}</span>
+            <span className="sr-only">
+              {activeMode.organizationPlaceholder}
+            </span>
             <input
               type="text"
               name="organization"

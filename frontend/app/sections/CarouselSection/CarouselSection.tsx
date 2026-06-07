@@ -80,7 +80,9 @@ export function CarouselSection({ data }: CarouselSectionProps) {
 
     measureLoop();
     resizeObserver.observe(track);
-    Array.from(track.children).forEach((child) => resizeObserver.observe(child));
+    Array.from(track.children).forEach((child) =>
+      resizeObserver.observe(child),
+    );
     animationFrame = requestAnimationFrame(tick);
 
     return () => {
@@ -134,10 +136,7 @@ export function CarouselSection({ data }: CarouselSectionProps) {
       </div>
 
       <div className={styles.viewport}>
-        <div
-          ref={trackRef}
-          className={styles.track}
-        >
+        <div ref={trackRef} className={styles.track}>
           {carouselImages.map((image, index) => (
             <figure
               key={`${image._key ?? image.asset?.url}-${index}`}

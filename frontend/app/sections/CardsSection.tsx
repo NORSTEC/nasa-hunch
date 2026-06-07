@@ -7,7 +7,10 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MdFlip } from "react-icons/md";
 import { portableTextToPlainText } from "@/sanity/utils/portableText";
-import type { CardItem, CardsSection as CardsSectionData } from "@/sanity/types";
+import type {
+  CardItem,
+  CardsSection as CardsSectionData,
+} from "@/sanity/types";
 
 type CardsSectionProps = {
   data: CardsSectionData | null;
@@ -27,16 +30,20 @@ function FlipCard({
   card,
   cardId,
   onFlipChange,
+  autoFlip,
 }: {
   card: CardItem;
   cardId: string;
   onFlipChange: (cardId: string, isFlipped: boolean) => void;
+  autoFlip: boolean;
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const image = card.image;
   const imageUrl = image.asset?.url;
   const description = portableTextToPlainText(card.description);
   const descriptionRef = useRef<HTMLSpanElement>(null);
+  const hasAutoFlippedRef = useRef(false); //for teasern
 
   const toggleFlip = () => {
     const next = !isFlipped;
@@ -44,6 +51,44 @@ function FlipCard({
     setIsFlipped(next);
     onFlipChange(cardId, next);
   };
+  //Dette er teaser
+  useEffect(() => {
+    if (!autoFlip || hasAutoFlippedRef.current) {
+      return;
+    }
+
+    const element = cardRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || hasAutoFlippedRef.current) {
+          return;
+        }
+
+        hasAutoFlippedRef.current = true;
+
+        setIsFlipped(true);
+
+        setTimeout(() => {
+          setIsFlipped(false);
+        }, 2000);
+
+        observer.disconnect();
+      },
+      {
+        threshold: 0.75,
+      },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [autoFlip]);
+  //til hit
 
   useEffect(() => {
     const descriptionElement = descriptionRef.current;
@@ -74,12 +119,20 @@ function FlipCard({
       descriptionElement.removeEventListener("wheel", stopCarouselGesture, {
         capture: true,
       });
-      descriptionElement.removeEventListener("pointerdown", stopCarouselGesture, {
-        capture: true,
-      });
-      descriptionElement.removeEventListener("touchstart", stopCarouselGesture, {
-        capture: true,
-      });
+      descriptionElement.removeEventListener(
+        "pointerdown",
+        stopCarouselGesture,
+        {
+          capture: true,
+        },
+      );
+      descriptionElement.removeEventListener(
+        "touchstart",
+        stopCarouselGesture,
+        {
+          capture: true,
+        },
+      );
       descriptionElement.removeEventListener("touchmove", stopCarouselGesture, {
         capture: true,
       });
@@ -87,7 +140,10 @@ function FlipCard({
   }, []);
 
   return (
-    <div className="group block w-[16rem] lg:w-[23rem] overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1">
+    <div
+      ref={cardRef}
+      className="group block w-[16rem] lg:w-[23rem] overflow-hidden bg-transparent p-0 text-foreground [perspective:1200px] py-5 lg:py-15 px-1"
+    >
       <span
         className={`relative block aspect-[3/5] lg:aspect-[2/3] w-full transition-transform duration-500 [transform-style:preserve-3d] ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
@@ -281,8 +337,9 @@ export function CardsSection({ data }: CardsSectionProps) {
 
     let animationFrame = 0;
     const keepAutoScrollStopped = () => {
-      const autoScroll = (emblaApi?.plugins() as AutoScrollPluginApi | undefined)
-        ?.autoScroll;
+      const autoScroll = (
+        emblaApi?.plugins() as AutoScrollPluginApi | undefined
+      )?.autoScroll;
 
       if (autoScroll?.isPlaying?.()) {
         autoScroll.stop?.();
@@ -341,27 +398,31 @@ export function CardsSection({ data }: CardsSectionProps) {
       </div>
 
       <div className="embla">
-        <div className="embla__viewport" ref={enableEmbla ? emblaRef : undefined}>
+        <div
+          className="embla__viewport"
+          ref={enableEmbla ? emblaRef : undefined}
+        >
           <div
             className="embla__container"
             ref={!enableEmbla ? containerRef : null}
           >
-          {slides.map((card, index) => {
-            const cardId = `${card._key}-${index}`;
+            {slides.map((card, index) => {
+              const cardId = `${card._key}-${index}`;
 
-            return (
-            <div
-              className="embla__slide min-w-[18rem] lg:min-w-[25rem]"
-              key={cardId}
-            >
-              <FlipCard
-                card={card}
-                cardId={cardId}
-                onFlipChange={handleFlipChange}
-              />
-            </div>
-            );
-          })}
+              return (
+                <div
+                  className="embla__slide min-w-[18rem] lg:min-w-[25rem]"
+                  key={cardId}
+                >
+                  <FlipCard
+                    card={card}
+                    cardId={cardId}
+                    onFlipChange={handleFlipChange}
+                    autoFlip={index === 0}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
