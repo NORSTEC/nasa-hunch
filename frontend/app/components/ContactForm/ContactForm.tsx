@@ -133,10 +133,10 @@ export function ContactForm() {
           aria-hidden="true"
         >
           <Image
-            src="/mascot1.png"
+            src="/mascot_turbulent.svg"
             alt=""
-            width={320}
-            height={420}
+            width={420}
+            height={520}
             className={styles.mascot}
           />
         </div>
