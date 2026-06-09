@@ -12,6 +12,19 @@ type SubmitStatus = "idle" | "loading" | "success" | "error";
 const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_CONTACT_APPS_SCRIPT_URL;
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 const RECAPTCHA_ACTION = "contact_submit";
+const TRANSFER_DURATION = 4200;
+
+const wait = (duration: number) =>
+  new Promise<void>((resolve) => window.setTimeout(resolve, duration));
+
+function formatTime(date: Date) {
+  return date.toLocaleTimeString("nb-NO", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+}
 
 declare global {
   interface Window {
@@ -53,12 +66,26 @@ const MODES: Record<
 export function ContactForm() {
   const [mode, setMode] = useState<ContactMode>("school");
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [progress, setProgress] = useState(0);
+  const [visibleLogCount, setVisibleLogCount] = useState(0);
+  const [transferLog, setTransferLog] = useState<string[]>([]);
   const [mascotOffset, setMascotOffset] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const activeMode = MODES[mode];
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const startedAt = new Date();
+    const secondStep = new Date(startedAt.getTime() + 1000);
+
+    setTransferLog([
+      `[${formatTime(startedAt)}] KOBLER TIL SERVER .......... OK`,
+      `[${formatTime(startedAt)}] ETABLERER SIKKER KANAL ..... OK`,
+      `[${formatTime(secondStep)}] PAKKER DATA ................ OK`,
+      `[${formatTime(secondStep)}] SENDER MELDING .............`,
+    ]);
+    setVisibleLogCount(0);
+    setProgress(0);
     setSubmitStatus("loading");
 
     try {
@@ -88,7 +115,7 @@ export function ContactForm() {
         });
       });
 
-      const response = await fetch(APPS_SCRIPT_URL, {
+      const submission = fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
@@ -99,14 +126,37 @@ export function ContactForm() {
           message: formData.get("message"),
           recaptchaToken,
         }),
+      }).then(async (response) => ({
+        response,
+        result: (await response.json()) as { ok?: boolean },
+      }));
+
+      const animation = new Promise<void>((resolve) => {
+        const animationStartedAt = performance.now();
+        const interval = window.setInterval(() => {
+          const elapsed = performance.now() - animationStartedAt;
+          setProgress(Math.min(100, Math.round((elapsed / TRANSFER_DURATION) * 100)));
+
+          if (elapsed >= TRANSFER_DURATION) {
+            window.clearInterval(interval);
+            resolve();
+          }
+        }, 40);
       });
-      const result = (await response.json()) as { ok?: boolean };
+
+      for (let line = 1; line <= 4; line += 1) {
+        await wait(650);
+        setVisibleLogCount(line);
+      }
+
+      const [{ response, result }] = await Promise.all([submission, animation]);
 
       if (!response.ok || !result.ok) {
         throw new Error("Contact form submission was rejected");
       }
 
       form.reset();
+      setProgress(100);
       setSubmitStatus("success");
     } catch (error) {
       console.error("Contact form submission failed", error);
@@ -165,6 +215,7 @@ export function ContactForm() {
                 isActive ? styles.activeToggle : ""
               }`}
               onClick={() => setMode(option)}
+              disabled={submitStatus === "loading" || submitStatus === "success"}
             >
               {MODES[option].label}
             </button>
@@ -180,81 +231,136 @@ export function ContactForm() {
       ) : null}
 
       <form className={styles.panel} onSubmit={handleSubmit}>
-        <div className={styles.fields}>
-          <label className={styles.field}>
-            <span className="sr-only">Navn</span>
-            <input
-              type="text"
-              name="name"
-              placeholder="Navn"
-              autoComplete="name"
-              maxLength={200}
-              required
-            />
-          </label>
-
-          <label className={styles.field}>
-            <span className="sr-only">Epost</span>
-            <input
-              type="email"
-              name="email"
-              placeholder="Epost"
-              autoComplete="email"
-              maxLength={320}
-              required
-            />
-          </label>
-
-          <label className={styles.field}>
-            <span className="sr-only">
-              {activeMode.organizationPlaceholder}
-            </span>
-            <input
-              type="text"
-              name="organization"
-              placeholder={activeMode.organizationPlaceholder}
-              autoComplete="organization"
-              maxLength={300}
-              required
-            />
-          </label>
-
-          <label className={`${styles.field} ${styles.messageField}`}>
-            <span className="sr-only">Melding</span>
-            <textarea
-              name="message"
-              placeholder="Melding"
-              rows={6}
-              maxLength={5000}
-              required
-            />
-          </label>
-
-          <button
-            className={styles.submitButton}
-            type="submit"
-            disabled={submitStatus === "loading"}
-          >
-            {submitStatus === "loading" ? "SENDER..." : "SEND MELDING"}
-          </button>
-          <p
-            className={`${styles.status} ${
-              submitStatus === "error" ? styles.errorStatus : ""
+        <div className={styles.leftColumn}>
+          <div
+            className={`${styles.fields} ${
+              submitStatus === "loading" || submitStatus === "success"
+                ? styles.hiddenFields
+                : ""
             }`}
-            role="status"
-            aria-live="polite"
+            aria-hidden={
+              submitStatus === "loading" || submitStatus === "success"
+            }
           >
-            {submitStatus === "success"
-              ? "Takk! Meldingen er sendt."
-              : submitStatus === "error"
+            <label className={styles.field}>
+              <span className="sr-only">Navn</span>
+              <input
+                type="text"
+                name="name"
+                placeholder="Navn"
+                autoComplete="name"
+                maxLength={200}
+                required
+              />
+            </label>
+
+            <label className={styles.field}>
+              <span className="sr-only">Epost</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="Epost"
+                autoComplete="email"
+                maxLength={320}
+                required
+              />
+            </label>
+
+            <label className={styles.field}>
+              <span className="sr-only">
+                {activeMode.organizationPlaceholder}
+              </span>
+              <input
+                type="text"
+                name="organization"
+                placeholder={activeMode.organizationPlaceholder}
+                autoComplete="organization"
+                maxLength={300}
+                required
+              />
+            </label>
+
+            <label className={`${styles.field} ${styles.messageField}`}>
+              <span className="sr-only">Melding</span>
+              <textarea
+                name="message"
+                placeholder="Melding"
+                rows={6}
+                maxLength={5000}
+                required
+              />
+            </label>
+
+            <button className={styles.submitButton} type="submit">
+              SEND MELDING
+            </button>
+            <p
+              className={`${styles.status} ${
+                submitStatus === "error" ? styles.errorStatus : ""
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {submitStatus === "error"
                 ? "Noe gikk galt. Prøv igjen senere."
                 : ""}
-          </p>
-          <p className={styles.recaptchaNotice}>
-            Dette nettstedet er beskyttet av reCAPTCHA. Googles{" "}
-            <a href="https://policies.google.com/privacy">personvernregler</a>{" "}
-            og <a href="https://policies.google.com/terms">vilkår</a> gjelder.
-          </p>
+            </p>
+            <p className={styles.recaptchaNotice}>
+              Dette nettstedet er beskyttet av reCAPTCHA. Googles{" "}
+              <a href="https://policies.google.com/privacy">personvernregler</a>{" "}
+              og <a href="https://policies.google.com/terms">vilkår</a> gjelder.
+            </p>
+          </div>
+
+          {submitStatus === "loading" || submitStatus === "success" ? (
+            <div className={styles.transferContent} aria-live="polite">
+              <p className={styles.transferEyebrow}>NASA HUNCH // SIGNALSYSTEM</p>
+              <h2 className={styles.transferTitle}>
+                {submitStatus === "success"
+                  ? "OVERFØRING FULLFØRT"
+                  : "STARTER OVERFØRING…"}
+              </h2>
+
+              <div className={styles.terminal} aria-label="Overføringslogg">
+                {transferLog.map((line, index) => (
+                  <p
+                    key={line}
+                    className={`${styles.logLine} ${
+                      index < visibleLogCount ? styles.visibleLogLine : ""
+                    }`}
+                  >
+                    {line}
+                    {index === 3 && submitStatus === "success" ? " OK" : ""}
+                  </p>
+                ))}
+              </div>
+
+              <div
+                className={styles.progressTrack}
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progress}
+              >
+                <div
+                  className={styles.progressFill}
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <p className={styles.progressLabel}>{progress}%</p>
+
+              {submitStatus === "success" ? (
+                <div className={styles.signalMessage}>
+                  <strong>
+                    SIGNAL REGISTRERT OG SENDT VIDERE
+                    <br />
+                    TIL NASA HUNCH-TEAMET.
+                  </strong>
+                  <span>VI TAR KONTAKT SÅ SNART SOM MULIG.</span>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
 
         <div

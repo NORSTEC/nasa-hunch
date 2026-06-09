@@ -45,6 +45,10 @@
   border-color: var(--toggle-color);
 }
 
+.toggle:disabled {
+  cursor: default;
+}
+
 .panel {
   position: relative;
   display: grid;
@@ -85,13 +89,25 @@
       right top / var(--dash-width) 100% no-repeat;
 }
 
+.leftColumn {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+}
+
 .fields {
   position: relative;
   z-index: 1;
   display: flex;
+  width: 100%;
+  min-width: 0;
   flex-direction: column;
   gap: 1.25rem;
-  max-width: 46rem;
+}
+
+.hiddenFields {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .field {
@@ -175,8 +191,136 @@
   color: var(--foreground);
 }
 
+.transferContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  padding: 0.4rem 0;
+  box-sizing: border-box;
+  flex-direction: column;
+  gap: 0.85rem;
+  justify-content: space-between;
+  color: var(--contact-color);
+  font-family: var(--font-heading);
+  overflow: hidden;
+}
+
+.transferEyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  opacity: 0.75;
+}
+
+.transferTitle {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.7rem, 5vw, 3.6rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.terminal {
+  flex: 1 1 10rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: 10rem;
+  max-height: 13rem;
+  padding: 1rem;
+  border: 2px dashed var(--contact-color);
+  background: color-mix(in srgb, var(--contact-color) 8%, transparent);
+  overflow: hidden;
+}
+
+.logLine {
+  width: 0;
+  max-width: fit-content;
+  margin: 0 0 0.65rem;
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(0.65rem, 2vw, 0.95rem);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.logLine:last-child {
+  margin-bottom: 0;
+}
+
+.visibleLogLine {
+  width: 100%;
+  opacity: 1;
+  animation: type-line 600ms steps(42, end);
+}
+
+.progressTrack {
+  height: 0.85rem;
+  margin-top: 0.4rem;
+  border: 2px solid var(--contact-color);
+  background: transparent;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--contact-color);
+  transition: width 80ms linear;
+}
+
+.progressLabel {
+  margin: 0.35rem 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  text-align: right;
+}
+
+.signalMessage {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 0.4rem;
+  padding: 1.25rem;
+  border: 2px dashed var(--contact-color);
+  color: var(--foreground);
+  line-height: 1.25;
+  text-transform: uppercase;
+  animation: signal-in 500ms ease-out both;
+}
+
+.signalMessage strong {
+  color: var(--contact-color);
+  font-size: clamp(1rem, 3vw, 1.4rem);
+}
+
+@keyframes type-line {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes signal-in {
+  from {
+    transform: translateY(0.75rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .recaptchaNotice {
-  margin: -2rem 0 0;
+  margin: 0;
   color: var(--foreground);
   font-size: 0.7rem;
   line-height: 1.35;
@@ -245,9 +389,28 @@
     align-items: center;
     justify-content: center;
   }
+
+  .transferContent {
+    padding-block: 0.75rem;
+    gap: 1rem;
+  }
+
+  .terminal {
+    min-height: 11rem;
+    padding: 1.25rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .visibleLogLine,
+  .signalMessage {
+    animation: none;
+  }
+
+  .progressFill {
+    transition: none;
+  }
+
   .mascotWrap {
     transform: none;
   }
