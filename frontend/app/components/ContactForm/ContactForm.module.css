@@ -175,6 +175,21 @@
   color: var(--foreground);
 }
 
+.recaptchaNotice {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.recaptchaNotice a {
+  text-decoration: underline;
+}
+
+:global(.grecaptcha-badge) {
+  visibility: hidden;
+}
+
 .mascotWrap {
   position: relative;
   z-index: 0;

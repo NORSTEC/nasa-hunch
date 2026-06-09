@@ -90,7 +90,7 @@ export function ContactForm() {
 
       const response = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
           contactType: mode,
           name: formData.get("name"),
@@ -249,6 +249,11 @@ export function ContactForm() {
               : submitStatus === "error"
                 ? "Noe gikk galt. Prøv igjen senere."
                 : ""}
+          </p>
+          <p className={styles.recaptchaNotice}>
+            Dette nettstedet er beskyttet av reCAPTCHA. Googles{" "}
+            <a href="https://policies.google.com/privacy">personvernregler</a>{" "}
+            og <a href="https://policies.google.com/terms">vilkår</a> gjelder.
           </p>
         </div>
 
