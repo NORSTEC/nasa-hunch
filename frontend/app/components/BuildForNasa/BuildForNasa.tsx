@@ -26,7 +26,7 @@ export function BuildForNasa() {
           width={500}
           height={500}
           priority
-          className="float-soft h-auto w-48 object-contain drop-shadow-[0.18rem_0.22rem_0_var(--background)] [--float-duration:6.7s] [--float-x-end:0.14rem] [--float-y-end:-0.85rem] [--float-rotate-end:5deg] [animation-delay:-2.4s] [transform-origin:50%_55%]"
+          className="float-soft h-auto sm:w-48 w-24 object-contain drop-shadow-[0.18rem_0.22rem_0_var(--background)] [--float-duration:6.7s] [--float-x-end:0.14rem] [--float-y-end:-0.85rem] [--float-rotate-end:5deg] [animation-delay:-2.4s] [transform-origin:50%_55%]"
         />
       </div>
     </div>
