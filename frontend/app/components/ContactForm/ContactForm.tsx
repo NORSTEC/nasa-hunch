@@ -117,7 +117,7 @@ export function ContactForm() {
 
       const submission = fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           contactType: mode,
           name: formData.get("name"),
@@ -152,7 +152,9 @@ export function ContactForm() {
       const [{ response, result }] = await Promise.all([submission, animation]);
 
       if (!response.ok || !result.ok) {
-        throw new Error("Contact form submission was rejected");
+        throw new Error(
+          `Contact form submission was rejected (${response.status}): ${JSON.stringify(result)}`,
+        );
       }
 
       form.reset();
