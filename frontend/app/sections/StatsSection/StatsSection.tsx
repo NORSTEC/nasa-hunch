@@ -38,9 +38,24 @@ export function StatsSection({ data }: StatsSectionProps) {
   }
 
   const stats = data.stats.slice(0, 4);
+  const sortedStats = [...stats].sort(
+    (firstStat, secondStat) => firstStat.number - secondStat.number,
+  );
+  const cardSizes = new Map<string, { desktop: string; mobile: string }>(
+    sortedStats.map(
+      (stat, index) =>
+        [
+          stat._key,
+          {
+            desktop: `${11 + index * 5}rem`,
+            mobile: `${13 + index * 4}rem`,
+          },
+        ] as const,
+    ),
+  );
 
-  const leftColumn = [stats[0], stats[2]].filter(Boolean);
-  const rightColumn = [stats[1], stats[3]].filter(Boolean);
+  const leftColumn = [sortedStats[0], sortedStats[3]].filter(Boolean);
+  const rightColumn = [sortedStats[1], sortedStats[2]].filter(Boolean);
   const toggleStat = (statKey: string) => {
     setExpandedStatKey((currentKey) =>
       currentKey === statKey ? null : statKey,
@@ -67,7 +82,8 @@ export function StatsSection({ data }: StatsSectionProps) {
               aria-expanded={expandedStatKey === stat._key}
               style={
                 {
-                  "--card-height": `${2 + stat.number * 1.5}rem`,
+                  "--card-height": cardSizes.get(stat._key)?.desktop,
+                  "--mobile-card-height": cardSizes.get(stat._key)?.mobile,
                 } as CSSProperties
               }
             >
@@ -99,7 +115,8 @@ export function StatsSection({ data }: StatsSectionProps) {
               aria-expanded={expandedStatKey === stat._key}
               style={
                 {
-                  "--card-height": `${2 + stat.number * 1.5}rem`,
+                  "--card-height": cardSizes.get(stat._key)?.desktop,
+                  "--mobile-card-height": cardSizes.get(stat._key)?.mobile,
                 } as CSSProperties
               }
             >
