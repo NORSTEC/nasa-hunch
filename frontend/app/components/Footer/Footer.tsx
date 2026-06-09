@@ -37,18 +37,16 @@ export function Footer({ data }: FooterProps) {
   }, []);
 
   return (
-      <footer
-          className="section relative overflow-visible pt-60 md:pt-72 pb-16 md:pb-24 px-8 md:px-12"
-      >
-        <div className="pointer-events-none absolute inset-x-0 top-0 overflow-visible">
-          <svg
-              viewBox="0 0 1440 320"
-              preserveAspectRatio="none"
-              className="hidden h-[320px] w-full md:block"
-              aria-hidden="true"
-          >
-            <path
-                d="
+    <footer className="section relative overflow-visible pt-60 md:pt-72 pb-16 md:pb-24 px-8 md:px-12">
+      <div className="pointer-events-none absolute inset-x-0 top-0 overflow-visible">
+        <svg
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
+          className="hidden h-[320px] w-full md:block"
+          aria-hidden="true"
+        >
+          <path
+            d="
       M0 220
 
       C120 170 220 110 340 130
@@ -67,23 +65,23 @@ export function Footer({ data }: FooterProps) {
       C1190 125 1230 165 1290 185
       C1350 205 1400 190 1440 150
     "
-                fill="none"
-                stroke="var(--accent-pink)"
-                strokeWidth="2"
-                strokeDasharray="10 10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-          </svg>
+            fill="none"
+            stroke="var(--accent-pink)"
+            strokeWidth="2"
+            strokeDasharray="10 10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
 
-          <svg
-              viewBox="0 0 390 200"
-              preserveAspectRatio="none"
-              className="h-[160px] w-full md:hidden"
-              aria-hidden="true"
-          >
-            <path
-                d="
+        <svg
+          viewBox="0 0 390 200"
+          preserveAspectRatio="none"
+          className="h-[160px] w-full md:hidden"
+          aria-hidden="true"
+        >
+          <path
+            d="
       M0 140
 
       C50 105 100 85 145 95
@@ -101,56 +99,50 @@ export function Footer({ data }: FooterProps) {
 
       C375 65 385 75 390 80
     "
-                fill="none"
-                stroke="var(--accent-pink)"
-                strokeWidth="2"
-                strokeDasharray="8 8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <div className="mt-40 md:mt-52">
-          <div className="grid grid-cols-1 gap-10 text-center md:grid-cols-3 md:gap-8">
-            <div className="flex flex-col items-center justify-center">
-              <p className="m-0 max-w-[22ch] font-heading">
-                Vi takker NORSTEC for å
-                <br/>
-                overta stafettpinnen
-                <br/>
-                for NASA HUNCH Norge
-              </p>
-            </div>
+            fill="none"
+            stroke="var(--accent-pink)"
+            strokeWidth="2"
+            strokeDasharray="8 8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      <div className="mt-40 md:mt-52">
+        <div className="grid grid-cols-1 gap-10 text-center md:grid-cols-3 md:gap-8">
+          <div className="flex flex-col items-center justify-center">
+            <p className="m-0 max-w-[22ch] font-heading">
+              Vi takker NORSTEC for å
+              <br />
+              overta stafettpinnen
+              <br />
+              for NASA HUNCH Norge
+            </p>
+          </div>
 
-            <div className="flex flex-col items-center justify-center">
-              <p>
-                Utvikling og Design
-              </p>
+          <div className="flex flex-col items-center justify-center">
+            <p>Utvikling og Design</p>
 
-              {CREDIT_LINKS.map((link) => (
-                  <a
-                      key={link.name}
-                      href={link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block underline underline-offset-[0.18em] transition hover:text-accent-pink"
-                  >
-                    {link.name}
-                  </a>
-              ))}
-            </div>
+            {CREDIT_LINKS.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="block underline underline-offset-[0.18em] transition hover:text-accent-pink"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
 
-            <div className="flex flex-col items-center justify-center">
-              <p className="m-0 mb-2 ">
-                Personvernerklæring
-              </p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="m-0 mb-2 ">Personvernerklæring</p>
 
-              <p className="m-0 max-w-[20ch]">
-                Vi henter ikke inn data.
-              </p>
-            </div>
+            <p className="m-0 max-w-[20ch]">Vi henter ikke inn data.</p>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
   );
 }

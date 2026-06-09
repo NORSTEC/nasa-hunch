@@ -135,7 +135,9 @@ export function ContactForm() {
         const animationStartedAt = performance.now();
         const interval = window.setInterval(() => {
           const elapsed = performance.now() - animationStartedAt;
-          setProgress(Math.min(100, Math.round((elapsed / TRANSFER_DURATION) * 100)));
+          setProgress(
+            Math.min(100, Math.round((elapsed / TRANSFER_DURATION) * 100)),
+          );
 
           if (elapsed >= TRANSFER_DURATION) {
             window.clearInterval(interval);
@@ -217,7 +219,9 @@ export function ContactForm() {
                 isActive ? styles.activeToggle : ""
               }`}
               onClick={() => setMode(option)}
-              disabled={submitStatus === "loading" || submitStatus === "success"}
+              disabled={
+                submitStatus === "loading" || submitStatus === "success"
+              }
             >
               {MODES[option].label}
             </button>
@@ -368,7 +372,11 @@ export function ContactForm() {
           aria-hidden="true"
         >
           <Image
-            src="/Mascot_turbulent.svg"
+            src={
+              mode === "partner"
+                ? "/Mascot_turbulent_blue.svg"
+                : "/Mascot_turbulent.svg"
+            }
             alt=""
             width={420}
             height={520}
