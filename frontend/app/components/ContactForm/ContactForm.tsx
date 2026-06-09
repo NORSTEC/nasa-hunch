@@ -316,7 +316,6 @@ export function ContactForm() {
 
           {submitStatus === "loading" || submitStatus === "success" ? (
             <div className={styles.transferContent} aria-live="polite">
-              <p className={styles.transferEyebrow}>NASA HUNCH // SIGNALSYSTEM</p>
               <h2 className={styles.transferTitle}>
                 {submitStatus === "success"
                   ? "OVERFØRING FULLFØRT"
@@ -354,9 +353,7 @@ export function ContactForm() {
               {submitStatus === "success" ? (
                 <div className={styles.signalMessage}>
                   <strong>
-                    SIGNAL REGISTRERT OG SENDT VIDERE
-                    <br />
-                    TIL NASA HUNCH-TEAMET.
+                    SIGNAL REGISTRERT OG SENDT VIDERE TIL NASA HUNCH-TEAMET.
                   </strong>
                   <span>VI TAR KONTAKT SÅ SNART SOM MULIG.</span>
                 </div>
