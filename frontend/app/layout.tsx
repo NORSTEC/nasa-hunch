@@ -10,7 +10,7 @@ const josefinSans = Josefin_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "🛰️ NASA HUNCH Norway",
+  title: "NASA HUNCH Norway",
   description:
     "Empowering students through hands-on engineering, innovation, and collaboration inspired by NASA HUNCH.",
   manifest: "/site.webmanifest",
