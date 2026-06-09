@@ -368,7 +368,7 @@ export function ContactForm() {
           aria-hidden="true"
         >
           <Image
-            src="/mascot_turbulent.svg"
+            src="/Mascot_turbulent.svg"
             alt=""
             width={420}
             height={520}
