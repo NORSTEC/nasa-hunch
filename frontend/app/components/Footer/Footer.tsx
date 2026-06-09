@@ -113,7 +113,7 @@ export function Footer({ data }: FooterProps) {
         <div className="mt-40 md:mt-52">
           <div className="grid grid-cols-1 gap-10 text-center md:grid-cols-3 md:gap-8">
             <div className="flex flex-col items-center justify-center">
-              <p className="m-0 max-w-[18ch] font-heading leading-[0.95] text-[clamp(1.5rem,2.2vw,2.5rem)]">
+              <p className="m-0 max-w-[22ch] font-heading">
                 Vi takker NORSTEC for å
                 <br/>
                 overta stafettpinnen
@@ -123,7 +123,7 @@ export function Footer({ data }: FooterProps) {
             </div>
 
             <div className="flex flex-col items-center justify-center">
-              <p className="m-0 mb-2 text-[clamp(1rem,1vw,1.2rem)]">
+              <p>
                 Utvikling og Design
               </p>
 
@@ -141,7 +141,7 @@ export function Footer({ data }: FooterProps) {
             </div>
 
             <div className="flex flex-col items-center justify-center">
-              <p className="m-0 mb-2 text-[clamp(1rem,1vw,1.2rem)]">
+              <p className="m-0 mb-2 ">
                 Personvernerklæring
               </p>
 
